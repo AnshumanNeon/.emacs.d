@@ -1,4 +1,3 @@
-
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
@@ -19,9 +18,8 @@
 (scroll-bar-mode -1)
 
 ;; set line numbers
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
-(global-display-line-numbers-mode)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 ;; add melpa
 (require 'package)
@@ -74,11 +72,6 @@
 (setq mood-line-file "~/.emacs.d/mood-line.el")
 (load-file mood-line-file)
 
-;; rainbow delimiter
-(use-package rainbow-delimiters
-  :ensure t
-  :hook (prog-mode rainbow-delimiters-mode))
-
 ;; emojis
 (use-package emojify
   :ensure t
@@ -86,9 +79,28 @@
 
 (add-hook 'after-init-hook #'global-emojify-mode)
 
+;; neotree
+(require 'all-the-icons)
+
+(use-package neotree
+  :ensure t)
+(require 'neotree)
+(keymap-global-set "C-S-T" 'neotree-toggle)
+
 ;; god-mode
 (setq god-mode-file "~/.emacs.d/god-mode.el")
 (load-file god-mode-file)
+
+;; all-the-icons
+(use-package all-the-icons
+  :ensure t
+  :if (displ ay-graphic-p))
+
+(defun my/neotree-hook(_unused)
+  (setq display-line-numbers -1)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+(add-hook 'neo-after-create-hook 'my/neotree-hook)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -96,7 +108,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(god-mode rainbow-delimiters emojify ## smartparens-global-mode smartparens-mode kaolin-themes spacemacs-theme magit graphene company-manually auto-complete aggressive-indent)))
+   '(all-the-icons treemacs god-mode rainbow-delimiters emojify ## smartparens-global-mode smartparens-mode kaolin-themes spacemacs-theme magit graphene company-manually auto-complete aggressive-indent)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
