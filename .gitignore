@@ -4,6 +4,7 @@
 *.el\~
 
 /elpa
+/emojis
 /eln-cache
 /games
 /tutorial
