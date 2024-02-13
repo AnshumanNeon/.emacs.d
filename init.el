@@ -1,3 +1,4 @@
+
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
@@ -85,13 +86,17 @@
 
 (add-hook 'after-init-hook #'global-emojify-mode)
 
+;; god-mode
+(setq god-mode-file "~/.emacs.d/god-mode.el")
+(load-file god-mode-file)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(rainbow-delimiters emojify ## smartparens-global-mode smartparens-mode kaolin-themes spacemacs-theme magit graphene company-manually auto-complete aggressive-indent)))
+   '(god-mode rainbow-delimiters emojify ## smartparens-global-mode smartparens-mode kaolin-themes spacemacs-theme magit graphene company-manually auto-complete aggressive-indent)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
