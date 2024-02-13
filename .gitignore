@@ -1,0 +1,12 @@
+*.elc
+*.dat
+*.graphene-geometry
+
+/elpa
+/eln-cache
+/games
+/tutorial
+/transient
+/auto-save-list
+
+smex-items
