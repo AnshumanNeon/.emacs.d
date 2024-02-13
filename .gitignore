@@ -1,6 +1,7 @@
 *.elc
 *.dat
 *.graphene-geometry
+*.el\~
 
 /elpa
 /eln-cache
