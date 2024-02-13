@@ -51,7 +51,10 @@
 ;; git integration
 (use-package magit
   :ensure t
-  :bind ("C-x g" . magit-status))
+  :commands (magit-status magit-get-current-branch)
+  :bind ("C-x g" . magit-status)
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; flychecker
 (use-package flycheck
@@ -70,6 +73,11 @@
 (setq mood-line-file "~/.emacs.d/mood-line.el")
 (load-file mood-line-file)
 
+;; rainbow delimiter
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode rainbow-delimiters-mode))
+
 ;; emojis
 (use-package emojify
   :ensure t
@@ -78,12 +86,12 @@
 (add-hook 'after-init-hook #'global-emojify-mode)
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.  
+ ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(emojify ## smartparens-global-mode smartparens-mode kaolin-themes spacemacs-theme magit graphene company-manually auto-complete aggressive-indent)))
+   '(rainbow-delimiters emojify ## smartparens-global-mode smartparens-mode kaolin-themes spacemacs-theme magit graphene company-manually auto-complete aggressive-indent)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
