@@ -5,6 +5,19 @@
 ;; Disable startup screen
 (setq inhibit-startup-message t)
 
+;; default settings
+(setq initial-scratch-message nil)
+(setq mark-even-if-inactive nil)
+(setq kill-whole-line t)
+(setq use-short-answers t)
+(setq completions-detailed t)
+(setq next-error-message-highlight t)
+(delete-selection-mode t)
+(savehist-mode)
+
+;; terminal bind key
+(bind-key* "C-c C-;" #'execute-extended-command)
+
 ;; gcmh
 (load-file "~/.emacs.d/gcmh.el")
 (gcmh-mode 1)
@@ -31,13 +44,38 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+(tooltip-mode -1)
+(pixel-scroll-mode)
+
+;; highlight links
+(global-goto-address-mode)
+
+;; copy filename to clipboard
+(defun copy-file-name-to-clipboard (do-not-strip-prefix)
+  "Copy the current buffer file name to the clipboard using DO-NOT-STRIP-PREFIX."
+  (interactive "P")
+  (let
+      ((filename (pt/project-relative-file-name do-not-strip-prefix)))
+    (kill-new filename)
+    (message "Copied buffer file name '%s' to the clipboard." filename)))
+
+(bind-key "C-c p" #'copy-file-name-to-clipboard)
 
 ;; set line numbers
+(global-display-line-numbers-mode t)
+(column-number-mode)
 (setq-default display-line-numbers-type 'relative)
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 ;; highlight current line
 (global-hl-line-mode t)
+(add-hook 'text-mode-hook #'hl-line-mode)
+
+;; remove backup and autosave files
+(setq
+ make-backup-files nil
+ auto-save-default nil
+ create-lockfiles nil)
 
 ;; add melpa
 (require 'package)
@@ -90,6 +128,11 @@
 ;; god-mode
 (load-file "~/.emacs.d/god-mode.el")
 
+;; parens coloring
+(use-package rainbow-delimiters
+  :disabled
+  :hook ((prog-mode . rainbow-delimiters-mode)))
+
 ;; all-the-icons
 (use-package all-the-icons
   :ensure t
@@ -105,6 +148,15 @@
 
 ;; org-mode
 (load-file "~/.emacs.d/org-mode-config.el")
+
+;; clangd and eglot
+(use-package eglot
+  :ensure t
+  :config
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  :hook
+  (c-mode-hook . eglot-ensure)
+  (c++-mode-hook . eglot-ensure))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

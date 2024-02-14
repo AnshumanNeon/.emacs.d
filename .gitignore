@@ -11,6 +11,7 @@
 /transient
 /auto-save-list
 
+history
 smex-items
 gcmh.el
 .company-manually.el
