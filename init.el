@@ -5,6 +5,21 @@
 ;; Disable startup screen
 (setq inhibit-startup-message t)
 
+;; gcmh
+(load-file "~/.emacs.d/gcmh.el")
+(gcmh-mode 1)
+
+;; get startup times
+(defun efs/display-startup-time ()
+  "Get startup time."
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                    (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'efs/display-startup-time)
+
 ;; set size of startup screen
 (setq initial-frame-alist
       (append initial-frame-alist
@@ -38,14 +53,11 @@
   (package-install 'use-package))
 
 ;; themeing
-(defvar theme-file)
-(setq theme-file "~/.emacs.d/themes.el")
-(load-file theme-file)
+(load-file "~/.emacs.d/themes.el")
 
 ;; company-mode
-(defvar company-file)
-(setq company-file "~/.emacs.d/company.el")
-(load-file company-file)
+(with-eval-after-load 'kaolin-themes
+  (load-file "~/.emacs.d/company.el"))
 
 ;; aggressive indentation
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
@@ -61,66 +73,38 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; flychecker
-(use-package flycheck
-  :ensure t
-  :config
-  (add-hook 'after-init-hook #'global-flycheck-mode))
 
-;; smart parentheses
-(use-package smartparens-mode
-  :ensure smartparens
-  :hook (prog-mode text-mode markdown-mode)
-  :config
-  (require 'smartparens-config))
+(use-package flycheck
+  :config (add-hook 'after-init-hook #'global-flycheck-mode))
 
 ;; mood line
-(defvar mood-line-file)
-(setq mood-line-file "~/.emacs.d/mood-line.el")
-(load-file mood-line-file)
-
-;; emojis
-(use-package emojify
-  :ensure t
-  :hook (after-init . global-emojify-mode))
-
-(add-hook 'after-init-hook #'global-emojify-mode)
+(load-file "~/.emacs.d/mood-line.el")
 
 ;; neotree
-(require 'all-the-icons)
-
-(use-package neotree
-  :ensure t)
-(require 'neotree)
-(keymap-global-set "C-S-T" 'neotree-toggle)
+(with-eval-after-load 'kaolin-themes
+  (with-eval-after-load 'all-the-icons
+    (use-package neotree
+      :ensure t)
+    (keymap-global-set "C-S-T" 'neotree-toggle)))
 
 ;; god-mode
-(defvar god-mode-file)
-(setq god-mode-file "~/.emacs.d/god-mode.el")
-(load-file god-mode-file)
+(load-file "~/.emacs.d/god-mode.el")
 
 ;; all-the-icons
 (use-package all-the-icons
   :ensure t
   :if (display-graphic-p))
 
-(defun my/neotree-hook(_unused)
-  "Make sure that line numbers are not displayed in neotree buffer."
-  (setq display-line-numbers -1)
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode))
-(add-hook 'neo-after-create-hook 'my/neotree-hook)
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
-
-;; lsp-mode
-(use-package lsp-mode
-  :ensure t
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :commands lsp)
+(with-eval-after-load 'neotree
+  (defun my/neotree-hook(_unused)
+    "Make sure that line numbers are not displayed in neotree buffer."
+    (setq display-line-numbers -1)
+    (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+  (add-hook 'neo-after-create-hook 'my/neotree-hook)
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
 ;; org-mode
-(defvar org-mode-config-file)
-(setq org-mode-config-file "~/.emacs.d/org-mode-config.el")
-(load-file org-mode-config-file)
+(load-file "~/.emacs.d/org-mode-config.el")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -128,7 +112,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(org-bullets lsp-mode all-the-icons treemacs god-mode rainbow-delimiters emojify ## smartparens-global-mode smartparens-mode kaolin-themes spacemacs-theme magit graphene company-manually auto-complete aggressive-indent)))
+   '(org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

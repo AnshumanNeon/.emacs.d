@@ -9,9 +9,11 @@
 
 (use-package org
   :ensure t
-  :hook (org-mode . dw/org-mode-setup)
   :config
   (setq org-startup-indented 1))
+
+(with-eval-after-load 'org
+  (add-hook 'org-mode #'dw/org-mode-setup))
 
 (use-package org-bullets
   :after org
