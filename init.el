@@ -21,6 +21,9 @@
 (setq display-line-numbers-type 'relative)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+;; highlight current line
+(global-hl-line-mode t)
+
 ;; add melpa
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -59,7 +62,7 @@
 (use-package flycheck
   :ensure t
   :config
-  (setq flycheck-check-syntax-automatically '(save mode-enabled)))
+  (add-hook 'after-init-hook #'global-flycheck-mode))
 
 ;; smart parentheses
 (use-package smartparens-mode
