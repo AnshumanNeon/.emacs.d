@@ -18,7 +18,7 @@
 (scroll-bar-mode -1)
 
 ;; set line numbers
-(setq display-line-numbers-type 'relative)
+(setq-default display-line-numbers-type 'relative)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 ;; highlight current line
@@ -38,10 +38,12 @@
   (package-install 'use-package))
 
 ;; themeing
+(defvar theme-file)
 (setq theme-file "~/.emacs.d/themes.el")
 (load-file theme-file)
 
 ;; company-mode
+(defvar company-file)
 (setq company-file "~/.emacs.d/company.el")
 (load-file company-file)
 
@@ -72,6 +74,7 @@
   (require 'smartparens-config))
 
 ;; mood line
+(defvar mood-line-file)
 (setq mood-line-file "~/.emacs.d/mood-line.el")
 (load-file mood-line-file)
 
@@ -91,15 +94,17 @@
 (keymap-global-set "C-S-T" 'neotree-toggle)
 
 ;; god-mode
+(defvar god-mode-file)
 (setq god-mode-file "~/.emacs.d/god-mode.el")
 (load-file god-mode-file)
 
 ;; all-the-icons
 (use-package all-the-icons
   :ensure t
-  :if (displ ay-graphic-p))
+  :if (display-graphic-p))
 
 (defun my/neotree-hook(_unused)
+  "Make sure that line numbers are not displayed in neotree buffer."
   (setq display-line-numbers -1)
   (add-hook 'prog-mode-hook 'display-line-numbers-mode))
 (add-hook 'neo-after-create-hook 'my/neotree-hook)
