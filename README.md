@@ -22,7 +22,7 @@ To have your configs updated with mine:
 * clone the repo with the last command (if not done so yet)
 * pull from the repo to have it updated:
 ```
-git pull -u origin master
+git pull origin master
 ```
 
 ## Customising Config
