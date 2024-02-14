@@ -2,4 +2,4 @@
 
 Here lies the config files I use and will be using in future and present.
 <br>
-[preview_img]("./assets/preview.png") 
+<img alt="preview_img" src="./assets/preview.png" />
