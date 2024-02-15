@@ -8,19 +8,13 @@
   (visual-line-mode 1))
 
 (use-package org
-  :ensure t
+  :mode ("\\.org\\" . org-mode)
+  :interpreter ("org" . org-mode)
   :config
   (setq org-startup-indented 1))
 
-(with-eval-after-load 'org
+(eval-after-load 'org
   (add-hook 'org-mode #'dw/org-mode-setup))
-
-(use-package org-bullets
-  :after org
-  :ensure t
-  :hook (org-mode . org-bullets-mode)
-  :custom
-  (org-bullets-bullet-list '("◉" "○" "✸" "✿" "●" "○" "●")))
 
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
@@ -35,7 +29,8 @@
                 (org-level-7 . 1.1)
                 (org-level-8 . 1.1))))
 
-(require 'org-indent)
+(with-eval-after-load 'org
+  (require 'org-indent))
 
 (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))

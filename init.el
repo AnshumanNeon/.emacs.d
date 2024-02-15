@@ -130,24 +130,20 @@
 
 ;; parens coloring
 (use-package rainbow-delimiters
-  :disabled
-  :hook ((prog-mode . rainbow-delimiters-mode)))
+  :ensure t)
 
 ;; all-the-icons
 (use-package all-the-icons
   :ensure t
   :if (display-graphic-p))
 
-(with-eval-after-load 'neotree
+(eval-after-load 'neotree
   (defun my/neotree-hook(_unused)
     "Make sure that line numbers are not displayed in neotree buffer."
     (setq display-line-numbers -1)
     (add-hook 'prog-mode-hook 'display-line-numbers-mode))
   (add-hook 'neo-after-create-hook 'my/neotree-hook)
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
-
-;; org-mode
-(load-file "~/.emacs.d/org-mode-config.el")
 
 ;; clangd and eglot
 (use-package eglot
@@ -158,13 +154,23 @@
   (c-mode-hook . eglot-ensure)
   (c++-mode-hook . eglot-ensure))
 
+;; golden ratio to handle the buffers
+(use-package golden-ratio
+  :ensure t
+  :hook (after-init . golden-ratio-mode)
+  :custom
+  (golden-ratio-exclude-modes '(occur-mode)))
+
+;; org-mode
+(load-file "~/.emacs.d/org-mode-config.el")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent)))
+   '(golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
