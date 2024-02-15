@@ -145,15 +145,6 @@
   (add-hook 'neo-after-create-hook 'my/neotree-hook)
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
-;; clangd and eglot
-(use-package eglot
-  :ensure t
-  :config
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-  :hook
-  (c-mode-hook . eglot-ensure)
-  (c++-mode-hook . eglot-ensure))
-
 ;; golden ratio to handle the buffers
 (use-package golden-ratio
   :ensure t
@@ -163,6 +154,40 @@
 
 ;; org-mode
 (load-file "~/.emacs.d/org-mode-config.el")
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
+(add-hook 'web-mode-hook  'my-web-mode-hook)
+
+;; clangd and eglot
+(use-package eglot
+  :ensure t
+  :config
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  :hook
+  (c-mode-hook . eglot-ensure)
+  (c++-mode-hook . eglot-ensure)
+  (web-mode . eglot-ensure))
+
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (web-mode . lsp)
+	 (c-mode . lsp)
+	 (c++-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
