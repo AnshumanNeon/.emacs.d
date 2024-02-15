@@ -137,7 +137,7 @@
   :ensure t
   :if (display-graphic-p))
 
-(eval-after-load 'neotree
+(with-eval-after-load 'neotree
   (defun my/neotree-hook(_unused)
     "Make sure that line numbers are not displayed in neotree buffer."
     (setq display-line-numbers -1)
