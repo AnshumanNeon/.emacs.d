@@ -8,7 +8,7 @@
   (visual-line-mode 1))
 
 (use-package org
-  :mode ("\\.org\\" . org-mode)
+  :mode ("\\.org\\'" . org-mode)
   :interpreter ("org" . org-mode)
   :config
   (setq org-startup-indented 1))
