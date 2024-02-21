@@ -97,10 +97,8 @@
 (with-eval-after-load 'kaolin-themes
   (load-file "~/.emacs.d/company.el"))
 
-;; aggressive indentation
-(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'css-mode-hook #'aggressive-indent-mode)
-(global-aggressive-indent-mode 1)
+;; aggressive indentation bad so I use electric indent mode
+(electric-indent-mode 1)
 
 ;; git integration
 (use-package magit
