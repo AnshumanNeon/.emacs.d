@@ -22,6 +22,10 @@
 (load-file "~/.emacs.d/gcmh.el")
 (gcmh-mode 1)
 
+;; font
+(add-to-list 'default-frame-alist
+	     '(font . "FiraCode Nerd Font Mono-12"))
+
 ;; get startup times
 (defun efs/display-startup-time ()
   "Get startup time."
