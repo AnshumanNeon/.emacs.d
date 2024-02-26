@@ -14,6 +14,7 @@
   (setq org-startup-indented 1)
   (setq org-hide-emphasis-markers t))
 
+;; org-bullets
 (use-package org-bullets
   :after org
   :config
@@ -88,5 +89,13 @@
    " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
  org-agenda-current-time-string
  "◀── now ─────────────────────────────────────────────────")
+
+;; org-babel-langs
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (C . t)
+   (python . t)
+   (js . t)))
 
 ;;; org-mode-config.el ends here
