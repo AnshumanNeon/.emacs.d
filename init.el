@@ -130,6 +130,12 @@
 ;; god-mode
 (load-file "~/.emacs.d/god-mode.el")
 
+;; electric-pair
+(electric-pair-mode t)
+
+;; electric indent
+(electric-indent-mode t)
+
 ;; parens coloring
 (use-package rainbow-delimiters
   :ensure t)
