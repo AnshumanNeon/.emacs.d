@@ -183,6 +183,9 @@
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
+;; screenshot
+(load-file "./screenshot.el")
+
 ;; multiple-cursors
 (use-package multiple-cursors
   :ensure t
@@ -191,6 +194,12 @@
   ("C->" . mc/mark-next-like-this)
   ("C-<" . mc/mark-previous-like-this)
   ("C-c C-<" . mc/mark-all-like-this)))
+
+;; pdf-tools
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
