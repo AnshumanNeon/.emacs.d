@@ -195,11 +195,10 @@
   ("C-<" . mc/mark-previous-like-this)
   ("C-c C-<" . mc/mark-all-like-this)))
 
-;; pdf-tools
 (use-package pdf-tools
   :ensure t
   :config
-  (pdf-tools-install))
+  (pdf-loader-install))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
