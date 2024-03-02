@@ -18,6 +18,14 @@
 ;; terminal bind key
 (bind-key* "C-c C-;" #'execute-extended-command)
 
+;; pdf-tools
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install t))
+
+(pdf-loader-install t)
+
 ;; gcmh
 (load-file "~/.emacs.d/gcmh.el")
 (gcmh-mode 1)
@@ -199,7 +207,16 @@
 (use-package pdf-tools
   :ensure t
   :config
-  (pdf-tools-install))
+  (pdf-tools-install t))
+
+(pdf-loader-install t)
+
+;; epub (ebook file format) reader
+;; nov.el
+(use-package nov
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
