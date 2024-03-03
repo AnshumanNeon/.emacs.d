@@ -98,4 +98,10 @@
    (python . t)
    (js . t)))
 
+(use-package org-contrib
+  :ensure t)
+
+(with-eval-after-load 'org-contrib
+  (require 'ox-groff))
+
 ;;; org-mode-config.el ends here
