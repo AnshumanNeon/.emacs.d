@@ -74,20 +74,11 @@
 ;; set line numbers
 (global-display-line-numbers-mode t)
 
-(defun turn-off-line-numbers ()
-  "It turn of line number mode."
+(defun turn-off-line-numbers-when-in-pdf-tools-mode ()
+  "It turn of line number mode when in pdf-tools mode."
   (display-line-numbers-mode -1))
 
-(defun show-page-number-when-in-pdf-tools-mode ()
-  "It turn on page number mode when in pdf-tools mode."
-  (pdf-misc-size-indication-minor-mode t))
-
-(defun modes-to-switch-when-in-pdf-tools-mode ()
-  "It switche modes when in pdf mode."
-  (turn-off-line-numbers)
-  (show-page-number-when-in-pdf-tools-mode))
-
-(add-hook 'pdf-view-mode-hook #'modes-to-switch-when-in-pdf-tools-mode)
+(add-hook 'pdf-view-mode-hook #'turn-off-line-numbers-when-in-pdf-tools-mode)
 
 (column-number-mode)
 (setq-default display-line-numbers-type 'relative)
@@ -216,33 +207,6 @@
   ("C->" . mc/mark-next-like-this)
   ("C-<" . mc/mark-previous-like-this)
   ("C-c C-<" . mc/mark-all-like-this)))
-
-(defun my-nov-font-setup ()
-  (face-remap-add-relative 'variable-pitch :family "FiraCode Nerd Font"
-                                           :height 1.0))
-
-(defun nov-display ()
-  (face-remap-add-relative 'variable-pitch :family "FiraCode Nerd Font"
-						   :height 1.5)
-  (toggle-scroll-bar -1)
-  (setq mode-line-format nil
-		nov-header-line-format ""
-		cursor-type nil))
-
-(setq-default visual-fill-column-center-text t)
-(setq-default visual-fill-column-width 120)
-
-(use-package nov
-  :config
-  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
-  (add-hook 'nov-mode-hook 'nov-display)
-  (add-hook 'nov-mode-hook 'visual-fill-column-mode)
-  (add-hook 'nov-mode-hook 'turn-off-line-numbers)
-  (add-hook 'nov-mode-hook 'my-nov-font-setup))
-
-(setq nov-text-width 80)
-(setq nov-text-width t)
-(setq nov-text-width 120)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
