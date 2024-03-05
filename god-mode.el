@@ -2,8 +2,10 @@
 ;;; Commentary:
 ;;; none
 ;;; Code:
-(require 'god-mode)
-(god-mode)
+(use-package god-mode
+  :ensure t
+  :config
+  (god-mode))
 
 (global-set-key (kbd "<escape>") #'god-local-mode)
 (setq god-exempt-major-modes nil)
