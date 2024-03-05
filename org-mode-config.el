@@ -36,8 +36,7 @@
                 (org-level-7 . 1.1)
                 (org-level-8 . 1.1))))
 
-(with-eval-after-load 'org
-  (require 'org-indent))
+(require 'org-indent)
 
 (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
 (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))

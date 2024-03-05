@@ -37,11 +37,6 @@
 
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
-;; pdf-tools
-(use-package pdf-tools
-  :ensure t
-  :config
-  (pdf-loader-install))
 
 ;; set size of startup screen
 (setq initial-frame-alist
@@ -113,6 +108,12 @@
 ;; company-mode
 (with-eval-after-load 'kaolin-themes
   (load-file "~/.emacs.d/company.el"))
+
+;; pdf-tools
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-loader-install))
 
 ;; aggressive indentation bad so I use electric indent mode
 (electric-indent-mode 1)
@@ -195,9 +196,6 @@
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
-
-;; screenshot
-(load-file "./screenshot.el")
 
 ;; multiple-cursors
 (use-package multiple-cursors
