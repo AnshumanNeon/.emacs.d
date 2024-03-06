@@ -15,6 +15,10 @@
 (delete-selection-mode t)
 (savehist-mode)
 
+(add-hook 'emacs-startup-hook (lambda ()
+                                (when (get-buffer "*scratch*")
+				  (delete-other-windows))))
+
 ;; terminal bind key
 (bind-key* "C-c C-;" #'execute-extended-command)
 
