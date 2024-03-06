@@ -69,12 +69,6 @@
 ;; set line numbers
 (global-display-line-numbers-mode t)
 
-(defun turn-off-line-numbers-when-in-pdf-tools-mode ()
-  "It turn of line number mode when in pdf-tools mode."
-  (display-line-numbers-mode -1))
-
-(add-hook 'pdf-view-mode-hook #'turn-off-line-numbers-when-in-pdf-tools-mode)
-
 (column-number-mode)
 (setq-default display-line-numbers-type 'relative)
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
@@ -110,10 +104,16 @@
   (load-file "~/.emacs.d/company.el"))
 
 ;; pdf-tools
-(use-package pdf-tools
-  :ensure t
-  :config
-  (pdf-loader-install))
+;(use-package pdf-tools
+;  :ensure t
+;  :config
+;  (pdf-loader-install))
+
+;(defun turn-off-line-numbers-when-in-pdf-tools-mode ()
+;  "It turn of line number mode when in pdf-tools mode."
+;  (display-line-numbers-mode -1))
+
+;(add-hook 'pdf-view-mode-hook #'turn-off-line-numbers-when-in-pdf-tools-mode)
 
 ;; aggressive indentation bad so I use electric indent mode
 (electric-indent-mode 1)
@@ -127,7 +127,6 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; flychecker
-
 (use-package flycheck
   :config (add-hook 'after-init-hook #'global-flycheck-mode))
 
