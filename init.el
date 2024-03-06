@@ -107,11 +107,8 @@
 (with-eval-after-load 'kaolin-themes
   (load-file "~/.emacs.d/company.el"))
 
-;; pdf-tools
-(use-package pdf-tools
-  :ensure t
-  :config
-  (pdf-loader-install))
+;; pdf view
+(pdf-loader-install)
 
 (defun turn-off-line-numbers ()
   "It turn of line number mode when in pdf-tools mode."
@@ -132,15 +129,15 @@
 (setq-default visual-fill-column-width 120)
 
 (use-package nov
+  :mode ("\\.epub'" . nov-mode)
+  :interpreter ("nov" . nov-mode)
   :config
-  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
   (add-hook 'nov-mode-hook 'nov-display)
   (add-hook 'nov-mode-hook 'visual-fill-column-mode)
-  (add-hook 'nov-mode-hook 'turn-off-line-numbers))
-
-(setq nov-text-width 80)
-(setq nov-text-width t)
-(setq nov-text-width 120)
+  (add-hook 'nov-mode-hook 'turn-off-line-numbers)
+  (setq nov-text-width 80)
+  (setq nov-text-width t)
+  (setq nov-text-width 120))
 
 ;; aggressive indentation bad so I use electric indent mode
 (electric-indent-mode 1)
