@@ -104,16 +104,16 @@
   (load-file "~/.emacs.d/company.el"))
 
 ;; pdf-tools
-;(use-package pdf-tools
-;  :ensure t
-;  :config
-;  (pdf-loader-install))
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-loader-install))
 
-;(defun turn-off-line-numbers-when-in-pdf-tools-mode ()
-;  "It turn of line number mode when in pdf-tools mode."
-;  (display-line-numbers-mode -1))
+(defun turn-off-line-numbers-when-in-pdf-tools-mode ()
+  "It turn of line number mode when in pdf-tools mode."
+  (display-line-numbers-mode -1))
 
-;(add-hook 'pdf-view-mode-hook #'turn-off-line-numbers-when-in-pdf-tools-mode)
+(add-hook 'pdf-view-mode-hook #'turn-off-line-numbers-when-in-pdf-tools-mode)
 
 ;; aggressive indentation bad so I use electric indent mode
 (electric-indent-mode 1)
