@@ -87,6 +87,31 @@
  auto-save-default nil
  create-lockfiles nil)
 
+;; nov.el
+(defun nov-display ()
+  (face-remap-add-relative 'variable-pitch :family "FiraCode Nerd Font"
+						   :height 1.5)
+  (toggle-scroll-bar -1)
+  (setq mode-line-format nil
+		nov-header-line-format ""
+		cursor-type nil))
+
+(setq-default visual-fill-column-center-text t)
+(setq-default visual-fill-column-width 120)
+
+(use-package nov
+  :ensure t
+  :config
+  (add-hook 'nov-mode-hook 'nov-display)
+  (add-hook 'nov-mode-hook 'visual-fill-column-mode)
+  (add-hook 'nov-mode-hook 'turn-off-line-numbers))
+
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+(setq nov-text-width 80)
+(setq nov-text-width t)
+(setq nov-text-width 120)
+
 ;; add melpa
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -116,28 +141,6 @@
 
 (add-hook 'pdf-view-mode-hook #'turn-off-line-numbers)
 
-;; nov.el
-(defun nov-display ()
-  (face-remap-add-relative 'variable-pitch :family "FiraCode Nerd Font"
-						   :height 1.5)
-  (toggle-scroll-bar -1)
-  (setq mode-line-format nil
-		nov-header-line-format ""
-		cursor-type nil))
-
-(setq-default visual-fill-column-center-text t)
-(setq-default visual-fill-column-width 120)
-
-(use-package nov
-  :mode ("\\.epub'" . nov-mode)
-  :interpreter ("nov" . nov-mode)
-  :config
-  (add-hook 'nov-mode-hook 'nov-display)
-  (add-hook 'nov-mode-hook 'visual-fill-column-mode)
-  (add-hook 'nov-mode-hook 'turn-off-line-numbers)
-  (setq nov-text-width 80)
-  (setq nov-text-width t)
-  (setq nov-text-width 120))
 
 ;; aggressive indentation bad so I use electric indent mode
 (electric-indent-mode 1)
