@@ -19,9 +19,6 @@
                                 (when (get-buffer "*scratch*")
 				  (delete-other-windows))))
 
-;; terminal bind key
-(bind-key* "C-c C-;" #'execute-extended-command)
-
 ;; gcmh
 (load-file "~/.emacs.d/gcmh.el")
 (gcmh-mode 1)
@@ -87,31 +84,6 @@
  auto-save-default nil
  create-lockfiles nil)
 
-;; nov.el
-(defun nov-display ()
-  (face-remap-add-relative 'variable-pitch :family "FiraCode Nerd Font"
-						   :height 1.5)
-  (toggle-scroll-bar -1)
-  (setq mode-line-format nil
-		nov-header-line-format ""
-		cursor-type nil))
-
-(setq-default visual-fill-column-center-text t)
-(setq-default visual-fill-column-width 120)
-
-(use-package nov
-  :ensure t
-  :config
-  (add-hook 'nov-mode-hook 'nov-display)
-  (add-hook 'nov-mode-hook 'visual-fill-column-mode)
-  (add-hook 'nov-mode-hook 'turn-off-line-numbers))
-
-(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
-
-(setq nov-text-width 80)
-(setq nov-text-width t)
-(setq nov-text-width 120)
-
 ;; add melpa
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -141,6 +113,28 @@
 
 (add-hook 'pdf-view-mode-hook #'turn-off-line-numbers)
 
+;; nov.el
+(defun nov-display ()
+  (face-remap-add-relative 'variable-pitch :family "FiraCode Nerd Font"
+						   :height 1.5)
+  (toggle-scroll-bar -1)
+  (setq mode-line-format nil
+		nov-header-line-format ""
+		cursor-type nil))
+
+(setq-default visual-fill-column-center-text t)
+(setq-default visual-fill-column-width 120)
+
+(use-package nov
+  :config
+  (add-hook 'nov-mode-hook 'visual-fill-column-mode)
+  (add-hook 'nov-mode-hook 'turn-off-line-numbers))
+
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+(setq nov-text-width 80)
+(setq nov-text-width t)
+(setq nov-text-width 120)
 
 ;; aggressive indentation bad so I use electric indent mode
 (electric-indent-mode 1)
@@ -154,18 +148,10 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; flychecker
-(use-package flycheck
-  :config (add-hook 'after-init-hook #'global-flycheck-mode))
+(flymake-mode t)
 
 ;; mood line
 (load-file "~/.emacs.d/mood-line.el")
-
-;; neotree
-(with-eval-after-load 'kaolin-themes
-  (with-eval-after-load 'all-the-icons
-    (use-package neotree
-      :ensure t)
-    (keymap-global-set "C-S-T" 'neotree-toggle)))
 
 ;; god-mode
 (load-file "~/.emacs.d/god-mode.el")
@@ -179,19 +165,6 @@
 ;; parens coloring
 (use-package rainbow-delimiters
   :ensure t)
-
-;; all-the-icons
-(use-package all-the-icons
-  :ensure t
-  :if (display-graphic-p))
-
-(with-eval-after-load 'neotree
-  (defun my/neotree-hook(_unused)
-    "Make sure that line numbers are not displayed in neotree buffer."
-    (setq display-line-numbers -1)
-    (add-hook 'prog-mode-hook 'display-line-numbers-mode))
-  (add-hook 'neo-after-create-hook 'my/neotree-hook)
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
 ;; golden ratio to handle the buffers
 (use-package golden-ratio
@@ -238,7 +211,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(visual-fill-column nov golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent)))
+   '(nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

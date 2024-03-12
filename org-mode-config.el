@@ -9,7 +9,6 @@
   (visual-line-mode 1))
 
 (use-package org
-  :ensure t
   :mode ("\\.org\\'" . org-mode)
   :interpreter ("org" . org-mode)
   :config
