@@ -156,12 +156,6 @@
 ;; god-mode
 (load-file "~/.emacs.d/god-mode.el")
 
-;; electric-pair
-(electric-pair-mode t)
-
-;; electric indent
-(electric-indent-mode t)
-
 ;; parens coloring
 (use-package rainbow-delimiters
   :ensure t)
@@ -176,14 +170,9 @@
 ;; org-mode
 (load-file "~/.emacs.d/org-mode-config.el")
 
-;; clangd and eglot
-(use-package eglot
-  :ensure t
-  :config
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-  :hook
-  (c-mode-hook . eglot-ensure)
-  (c++-mode-hook . eglot-ensure))
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
 
 (use-package lsp-mode
   :ensure t
@@ -193,9 +182,15 @@
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
 	 (c-mode . lsp)
 	 (c++-mode . lsp)
+	 (elm-mode . lsp)
+	 (go-mode . lsp)
+	 (rust-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  :commands lsp
+  :config
+  (add-hook 'go-mode-hook #'lsp-deferred)
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
 
 ;; multiple-cursors
 (use-package multiple-cursors
@@ -208,9 +203,62 @@
 
 ;; elm-mode
 (use-package elm-mode
-  :ensure t
+  :mode ("\\.elm'" . elm-mode)
   :config
   (add-hook 'elm-mode-hook 'elm-format-on-save-mode))
+
+;; music-player emms
+(use-package emms
+  :ensure t
+  :config
+  (emms-all)
+  (setq emms-player-list '(emms-player-mpv)
+	emms-info-functions '(emms-info-native)))
+
+;;go-lang
+(use-package go-mode
+  :mode ("\\.go\\'" . go-mode)
+  :config
+  (autoload 'go-mode "go-mode" nil t)
+  (setq tab-width 4
+	indent-tabs-mode 1)
+  (setq lsp-go-analyses '((shadow . t)
+                        (simplifycompositelit . :json-false))))
+
+;; rust
+(use-package rust-mode
+  :ensure t
+  :mode("\\.rs\\'" . rust-mode))
+
+;; dart-mode
+(use-package dart-mode
+  :ensure t)
+
+;; flutter-mode
+(use-package flutter
+  :after dart-mode
+  :config
+  (flutter-sdk-path "~/development/flutter"))
+
+;; dumb-jump (jump to definition)
+(use-package dumb-jump
+  :ensure t)
+
+;; electric-pair
+(electric-pair-mode t)
+
+;; electric indent
+(electric-indent-mode t)
+
+;; markdown mode
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode))
+  :init (setq markdown-command (concat
+				"/opt/local/bin/pandoc"
+				" --from=markdown --to=html"
+				" --standalone --mathjax --highlight-style=pygments")))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -218,7 +266,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(lsp-mode elm-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent)))
+   '(ample-theme dumb-jump flutter dart-mode rust-mode go-mode emms lsp-mode elm-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
+ '(send-mail-function 'mailclient-send-it))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
