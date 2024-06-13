@@ -18,3 +18,7 @@ gcmh.el
 .mc-lists.el
 nov-places
 .lsp-session-v1
+
+.org-id-locations
+bookmarks
+org-roam.db

@@ -201,12 +201,6 @@
   ("C-<" . mc/mark-previous-like-this)
   ("C-c C-<" . mc/mark-all-like-this)))
 
-;; elm-mode
-(use-package elm-mode
-  :mode ("\\.elm'" . elm-mode)
-  :config
-  (add-hook 'elm-mode-hook 'elm-format-on-save-mode))
-
 ;; music-player emms
 (use-package emms
   :ensure t
@@ -224,11 +218,6 @@
 	indent-tabs-mode 1)
   (setq lsp-go-analyses '((shadow . t)
                         (simplifycompositelit . :json-false))))
-
-;; rust
-(use-package rust-mode
-  :ensure t
-  :mode("\\.rs\\'" . rust-mode))
 
 ;; dart-mode
 (use-package dart-mode
@@ -250,6 +239,25 @@
 ;; electric indent
 (electric-indent-mode t)
 
+;; sidebar
+(use-package dired-sidebar
+  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar)
+  :init
+  (add-hook 'dired-sidebar-mode-hook
+            (lambda ()
+              (unless (file-remote-p default-directory)
+                (auto-revert-mode))))
+  :config
+  (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
+  (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
+
+  (setq dired-sidebar-subtree-line-prefix "__")
+  (setq dired-sidebar-theme 'vscode)
+  (setq dired-sidebar-use-term-integration t)
+  (setq dired-sidebar-use-custom-font t))
+
 ;; markdown mode
 (use-package markdown-mode
   :ensure t
@@ -266,7 +274,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ample-theme dumb-jump flutter dart-mode rust-mode go-mode emms lsp-mode elm-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
+   '(ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
  '(send-mail-function 'mailclient-send-it))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

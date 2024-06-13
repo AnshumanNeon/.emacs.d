@@ -5,7 +5,7 @@
   (mood-line-mode))
 
 ;; customise format
-;;(setq mood-line-format mood-line-format-default)
+;; (setq mood-line-format mood-line-format-default)
 (setq mood-line-format
       (mood-line-defformat
        :left
