@@ -40,7 +40,7 @@
                   (org-level-6 . 1.1)
                   (org-level-7 . 1.1)
                   (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "FiraCode Nerd Font Mono-12" :weight 'regular :height (cdr face)))
+    (set-face-attribute (car face) nil :font "FiraCode Nerd Font Mono-12" :weight 'regular :height 100))
 
   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))

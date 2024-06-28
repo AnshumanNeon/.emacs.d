@@ -15,6 +15,13 @@
 (delete-selection-mode t)
 (savehist-mode)
 
+(defun server-shutdown()
+  (interactive)
+  (save-some-buffers)
+  (kill-emacs))
+
+(global-set-key (kbd "C-x #") 'server-shutdown)
+
 (add-hook 'emacs-startup-hook (lambda ()
                                 (when (get-buffer "*scratch*")
 				  (delete-other-windows))))
@@ -25,7 +32,7 @@
 
 ;; font
 (add-to-list 'default-frame-alist
-	     '(font . "FiraCode Nerd Font Mono-12"))
+	     '(font . "FiraCode Nerd Font Mono-10"))
 
 ;; get startup times
 (defun efs/display-startup-time ()
@@ -40,18 +47,19 @@
 
 
 ;; set size of startup screen
-(setq initial-frame-alist
-      (append initial-frame-alist
-	      '((left . 0)
-		(width . 0)
-		(fullscreen . fullboth))))
+;; (setq initial-frame-alist
+;;      (append initial-frame-alist
+;;	      '((left . 0)
+;;		(width . 0)
+;;		(fullscreen . fullboth))))
 
 ;; disable toolbar, menubar and scroll bar
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tooltip-mode -1)
-(pixel-scroll-mode)
+(pixel-scroll-mode t)
+(pixel-scroll-precision-mode t)
 
 ;; highlight links
 (global-goto-address-mode)
@@ -116,7 +124,7 @@
 ;; nov.el
 (defun nov-display ()
   (face-remap-add-relative 'variable-pitch :family "FiraCode Nerd Font"
-						   :height 1.5)
+						   :height 100)
   (toggle-scroll-bar -1)
   (setq mode-line-format nil
 		nov-header-line-format ""
@@ -125,16 +133,17 @@
 (setq-default visual-fill-column-center-text t)
 (setq-default visual-fill-column-width 120)
 
-(use-package nov
-  :config
-  (add-hook 'nov-mode-hook 'visual-fill-column-mode)
-  (add-hook 'nov-mode-hook 'turn-off-line-numbers))
+;;(use-package nov
+;;  :ensure t
+;;  :config
+;;  (add-hook 'nov-mode-hook 'visual-fill-column-mode)
+;;  (add-hook 'nov-mode-hook 'turn-off-line-numbers))
 
-(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+;;(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
-(setq nov-text-width 80)
-(setq nov-text-width t)
-(setq nov-text-width 120)
+;;(setq nov-text-width 80)
+;;(setq nov-text-width t)
+;;(setq nov-text-width 120)
 
 ;; aggressive indentation bad so I use electric indent mode
 (electric-indent-mode 1)
@@ -226,12 +235,6 @@
 (use-package dart-mode
   :ensure t)
 
-;; flutter-mode
-(use-package flutter
-  :after dart-mode
-  :config
-  (flutter-sdk-path "~/development/flutter"))
-
 ;; dumb-jump (jump to definition)
 (use-package dumb-jump
   :ensure t)
@@ -277,8 +280,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(emojify erc-image erc-hl-nicks ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
- '(send-mail-function 'mailclient-send-it))
+   '(## rainbow-delimiters pdf-tools org-roam nov multiple-cursors mood-line magit lsp-mode golden-ratio god-mode erc-image emojify emms ef-themes dumb-jump dired-sidebar dart-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
