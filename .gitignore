@@ -10,6 +10,8 @@
 /tutorial
 /transient
 /auto-save-list
+/site-lisp
+/emms
 
 history
 smex-items

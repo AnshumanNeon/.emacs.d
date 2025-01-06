@@ -22,18 +22,18 @@
   (cond
    (god-local-mode
     (set-face-attribute 'mode-line nil
-                        :foreground "#F3C09A"
-                        :background "#232025")
+                        :foreground "#689d6a"
+                        :background "#282828")
     (set-face-attribute 'mode-line-inactive nil
-                        :foreground "#F3C09A"
-                        :background "#232025"))
+                        :foreground "#689d6a"
+                        :background "#282828"))
    (t
     (set-face-attribute 'mode-line nil
-			:foreground "#bebed7"
-			:background "#1f1e21")
+			:foreground "#a89984"
+			:background "#282828")
     (set-face-attribute 'mode-line-inactive nil
-			:foreground "#404148"
-			:background "#1f1e21"))))
+			:foreground "#a89984"
+			:background "#282828"))))
 
 (add-hook 'post-command-hook #'my-god-mode-update-mode-line)
 ;;; god-mode.el ends here

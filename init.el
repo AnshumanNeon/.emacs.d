@@ -101,7 +101,7 @@
 (load-file "~/.emacs.d/themes.el")
 
 ;; company-mode
-(with-eval-after-load 'kaolin-themes
+(with-eval-after-load 'doom-themes
   (load-file "~/.emacs.d/company.el"))
 
 ;; pdf view
@@ -206,8 +206,7 @@
   :ensure t
   :config
   (emms-all)
-  (setq emms-player-list '(emms-player-mpv)
-	emms-info-functions '(emms-info-native)))
+  (setq emms-player-list '(emms-player-mplayer)))
 
 ;; erc
 (load-file "~/.emacs.d/erc.el")
@@ -220,17 +219,33 @@
   (setq tab-width 4
 	indent-tabs-mode 1)
   (setq lsp-go-analyses '((shadow . t)
-                        (simplifycompositelit . :json-false))))
+                          (simplifycompositelit . :json-false))))
 
-;; dart-mode
-(use-package dart-mode
-  :ensure t)
-
-;; flutter-mode
-(use-package flutter
-  :after dart-mode
+;; dimmer.el
+(use-package dimmer
+  :ensure t
   :config
-  (flutter-sdk-path "~/development/flutter"))
+  (dimmer-configure-which-key)
+  (dimmer-mode t)
+  (setq dimmer-fraction 0.4)
+  (setq dimmer-watch-frame-focus-events nil))
+
+;; focus-mode
+(use-package focus
+  :ensure t
+  :config
+  (global-set-key (kbd "C-c C-#") 'focus-mode))
+
+
+;; ;; dart-mode
+;; (use-package dart-mode
+;;   :ensure t)
+
+;; ;; flutter-mode
+;; (use-package flutter
+;;   :after dart-mode
+;;   :config
+;;   (flutter-sdk-path "~/development/flutter"))
 
 ;; dumb-jump (jump to definition)
 (use-package dumb-jump
@@ -261,6 +276,11 @@
   (setq dired-sidebar-use-term-integration t)
   (setq dired-sidebar-use-custom-font t))
 
+;; ;; discord
+;; (load-file "./elcord.el")
+;; (require 'elcord)
+;; (elcord-mode)
+
 ;; markdown mode
 (use-package markdown-mode
   :ensure t
@@ -271,13 +291,23 @@
 				" --from=markdown --to=html"
 				" --standalone --mathjax --highlight-style=pygments")))
 
+;; eaf apps
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-application-framework/")
+;; (require 'eaf)
+;; (require 'eaf-rss-reader)
+;; (require 'eaf-image-viewer)
+;; (require 'eaf-pdf-viewer)
+;; (require 'eaf-browser)
+;; (require 'eaf-markdown-previewer)
+;; (require 'eaf-org-previewer)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(emojify erc-image erc-hl-nicks ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
+   '(focus dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
  '(send-mail-function 'mailclient-send-it))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

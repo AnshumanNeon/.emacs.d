@@ -1,2 +1,0 @@
-;;; .emms-cache -*- mode: emacs-lisp; coding: utf-8; -*-
-(puthash "/Users/macbook/Music/Custom/Upswing/Exported/Upswing Edit 1 Export 1.wav" '(*track* (type . file) (name . "/Users/macbook/Music/Custom/Upswing/Exported/Upswing Edit 1 Export 1.wav") (info-mtime 26100 12053 800229 913000) (last-played 26100 13197 795692 0) (play-count . 3)) emms-cache-db)

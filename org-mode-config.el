@@ -32,14 +32,14 @@
 (require 'org-indent)
 
 (with-eval-after-load 'org
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
+  (dolist (face '((org-level-1 . 1.7)
+                  (org-level-2 . 1.6)
+                  (org-level-3 . 1.5)
+                  (org-level-4 . 1.4)
+                  (org-level-5 . 1.3)
+                  (org-level-6 . 1.2)
                   (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
+                  (org-level-8 . 1.05)))
     (set-face-attribute (car face) nil :font "FiraCode Nerd Font Mono-12" :weight 'regular :height (cdr face)))
 
   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
@@ -49,6 +49,8 @@
   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+
+(add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
 
 (use-package org-roam
   :after org
