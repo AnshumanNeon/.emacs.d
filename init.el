@@ -300,6 +300,9 @@
 				" --from=markdown --to=html"
 				" --standalone --mathjax --highlight-style=pygments")))
 
+;; remember the last place in a file
+(save-place-mode t)
+
 ;; eaf apps
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-application-framework/")
 ;; (require 'eaf)

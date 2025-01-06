@@ -42,6 +42,8 @@
                   (org-level-8 . 1.05)))
     (set-face-attribute (car face) nil :font "FiraCode Nerd Font Mono-12" :weight 'regular :height (cdr face)))
 
+  (set-face-attribute 'org-document-title nil :height 2.0)
+  (set-face-attribute 'org-document-info nil :height 1.3)
   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
