@@ -49,6 +49,7 @@
 ;; 		(width . 0)
 ;; 		(fullscreen . fullboth))))
 
+(setq frame-resize-pixelwise t)
 (toggle-frame-fullscreen)
 
 ;; disable toolbar, menubar and scroll bar
@@ -293,8 +294,7 @@
 ;; use-package with package.el:
 (use-package dashboard
   :ensure t
-  :config
-  (dashboard-setup-startup-hook))
+  :custom (initial-buffer-choice 'dashboard-open))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
