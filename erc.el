@@ -4,10 +4,9 @@
 ;;; Code:
 
 (setq erc-server "irc.libera.chat"
-      erc-nick "anshumanneon"    ; Change this!
-      erc-user-full-name "Anshuman"  ; And this!
+      erc-nick "anshumanneon"
+      erc-user-full-name "Anshuman"
       erc-track-shorten-start 8
-      erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
       erc-kill-buffer-on-part t
       erc-auto-query 'bury)
 

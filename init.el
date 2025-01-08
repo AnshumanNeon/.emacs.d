@@ -27,8 +27,12 @@
 				  (delete-other-windows))))
 
 ;; gcmh
-(load-file "~/.emacs.d/gcmh.el")
-(gcmh-mode 1)
+(add-to-list 'load-path "~/.emacs.d/gcmh.el")
+(gcmh-mode t)
+;; (use-package gcmh
+;;   :ensure t
+;;   :config
+;;   (gcmh-mode 1))
 
 ;; font
 (add-to-list 'default-frame-alist
@@ -48,15 +52,15 @@
 
 ;; set size of startup screen
 ;; (setq initial-frame-alist
-;;      (append initial-frame-alist
-;;	      '((left . 0)
-;;		(width . 0)
-;;		(fullscreen . fullboth))))
+;;       (append initial-frame-alist
+;; 	      '((left . 0)
+;; 		(width . 0)
+;; 		(fullscreen . fullboth))))
 
 ;; disable toolbar, menubar and scroll bar
 (tool-bar-mode -1)
-(menu-bar-mode -1)
 (scroll-bar-mode -1)
+(menu-bar-mode -1)
 (tooltip-mode -1)
 (pixel-scroll-mode t)
 (pixel-scroll-precision-mode t)
@@ -69,7 +73,7 @@
   "Copy the current buffer file name to the clipboard using DO-NOT-STRIP-PREFIX."
   (interactive "P")
   (let
-      ((filename (pt/project-relative-file-name do-not-strip-prefix)))
+      ((filename (file-relative-name do-not-strip-prefix)))
     (kill-new filename)
     (message "Copied buffer file name '%s' to the clipboard." filename)))
 
@@ -80,11 +84,9 @@
 
 (column-number-mode)
 (setq-default display-line-numbers-type 'relative)
-(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 ;; highlight current line
 (global-hl-line-mode t)
-(add-hook 'text-mode-hook #'hl-line-mode)
 
 ;; remove backup and autosave files
 (setq
@@ -113,7 +115,10 @@
   (load-file "~/.emacs.d/company.el"))
 
 ;; pdf view
-(pdf-loader-install)
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-loader-install))
 
 (defun turn-off-line-numbers ()
   "It turn of line number mode when in pdf-tools mode."
@@ -121,25 +126,25 @@
 
 (add-hook 'pdf-view-mode-hook #'turn-off-line-numbers)
 
-;; nov.el
-(defun nov-display ()
-  (face-remap-add-relative 'variable-pitch :family "FiraCode Nerd Font"
-						   :height 100)
-  (toggle-scroll-bar -1)
-  (setq mode-line-format nil
-		nov-header-line-format ""
-		cursor-type nil))
-
-(setq-default visual-fill-column-center-text t)
-(setq-default visual-fill-column-width 120)
-
-;;(use-package nov
+;; (use-package nov
 ;;  :ensure t
 ;;  :config
 ;;  (add-hook 'nov-mode-hook 'visual-fill-column-mode)
 ;;  (add-hook 'nov-mode-hook 'turn-off-line-numbers))
 
-;;(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+;; nov.el
+;; (defun nov-display ()
+;;   (face-remap-add-relative 'variable-pitch :family "FiraCode Nerd Font"
+;; 						   :height 100)
+;;   (toggle-scroll-bar -1)
+;;   (setq mode-line-format nil
+;; 		nov-header-line-format ""
+;; 		cursor-type nil))
+
+;; (setq-default visual-fill-column-center-text t)
+;; (setq-default visual-fill-column-width 120)
+
+;; (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
 ;;(setq nov-text-width 80)
 ;;(setq nov-text-width t)
@@ -179,6 +184,14 @@
 ;; org-mode
 (load-file "~/.emacs.d/org-mode-config.el")
 
+;;go-lang
+(use-package go-mode
+  :mode ("\\.go\\'" . go-mode)
+  :config
+  (autoload 'go-mode "go-mode" nil t)
+  (setq tab-width 4
+	indent-tabs-mode 1))
+
 (defun lsp-go-install-save-hooks ()
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
@@ -188,18 +201,15 @@
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-go-analyses '((shadow . t)
+                          (simplifycompositelit . :json-false)))
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
 	 (c-mode . lsp)
 	 (c++-mode . lsp)
-	 (elm-mode . lsp)
-	 (go-mode . lsp)
 	 (rust-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp
-  :config
-  (add-hook 'go-mode-hook #'lsp-deferred)
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
+  :commands lsp)
 
 ;; multiple-cursors
 (use-package multiple-cursors
@@ -219,16 +229,6 @@
 
 ;; erc
 (load-file "~/.emacs.d/erc.el")
-
-;;go-lang
-(use-package go-mode
-  :mode ("\\.go\\'" . go-mode)
-  :config
-  (autoload 'go-mode "go-mode" nil t)
-  (setq tab-width 4
-	indent-tabs-mode 1)
-  (setq lsp-go-analyses '((shadow . t)
-                          (simplifycompositelit . :json-false))))
 
 ;; dimmer.el
 (use-package dimmer
@@ -266,39 +266,16 @@
 ;; electric indent
 (electric-indent-mode t)
 
-;; sidebar
-(use-package dired-sidebar
-  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+;; dirvish
+(use-package dirvish
   :ensure t
-  :commands (dired-sidebar-toggle-sidebar)
-  :init
-  (add-hook 'dired-sidebar-mode-hook
-            (lambda ()
-              (unless (file-remote-p default-directory)
-                (auto-revert-mode))))
   :config
-  (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
-  (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
+  (dirvish-override-dired-mode))
 
-  (setq dired-sidebar-subtree-line-prefix "__")
-  (setq dired-sidebar-theme 'vscode)
-  (setq dired-sidebar-use-term-integration t)
-  (setq dired-sidebar-use-custom-font t))
-
-;; ;; discord
-;; (load-file "./elcord.el")
-;; (require 'elcord)
-;; (elcord-mode)
-
-;; markdown mode
-(use-package markdown-mode
-  :ensure t
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode))
-  :init (setq markdown-command (concat
-				"/opt/local/bin/pandoc"
-				" --from=markdown --to=html"
-				" --standalone --mathjax --highlight-style=pygments")))
+;; discord
+(load-file "./elcord.el")
+(require 'elcord)
+(elcord-mode)
 
 ;; remember the last place in a file
 (save-place-mode t)
@@ -319,7 +296,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(focus dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
+   '(gcmh focus dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
  '(send-mail-function 'mailclient-send-it))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
