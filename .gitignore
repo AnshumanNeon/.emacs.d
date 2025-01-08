@@ -20,6 +20,8 @@ gcmh.el
 .mc-lists.el
 nov-places
 .lsp-session-v1
+places
+recentf
 
 .org-id-locations
 bookmarks
