@@ -1,3 +1,7 @@
+;;; package -- Summary
+;;; Commentary:
+
+;;; Code:
 (use-package company-manually
   :ensure t
   :bind (:map company-active-map
@@ -7,3 +11,6 @@
   (setq company-idle-delay 0.0))
 
 (global-company-mode t)
+
+(provide 'company)
+;;; company.el ends here

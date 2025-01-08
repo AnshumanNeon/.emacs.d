@@ -14,6 +14,7 @@
 (setq next-error-message-highlight t)
 (delete-selection-mode t)
 (savehist-mode)
+(setq load-prefer-newer t)
 
 (defun server-shutdown()
   (interactive)
@@ -22,9 +23,9 @@
 
 (global-set-key (kbd "C-x #") 'server-shutdown)
 
-(add-hook 'emacs-startup-hook (lambda ()
-                                (when (get-buffer "*scratch*")
-				  (delete-other-windows))))
+;; (add-hook 'emacs-startup-hook (lambda ()
+;;                                 (when (get-buffer "*scratch*")
+;; 				  (delete-other-windows))))
 
 ;; font
 (add-to-list 'default-frame-alist
@@ -40,7 +41,6 @@
            gcs-done))
 
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
-
 
 ;; set size of startup screen
 ;; (setq initial-frame-alist
@@ -115,6 +115,11 @@
 (with-eval-after-load 'doom-themes
   (load-file "~/.emacs.d/company.el"))
 
+;; (use-package eglot
+;;   :ensure t
+;;   :config
+;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
+
 ;; pdf view
 (use-package pdf-tools
   :ensure t
@@ -126,6 +131,8 @@
   (display-line-numbers-mode -1))
 
 (add-hook 'pdf-view-mode-hook #'turn-off-line-numbers)
+
+(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-12"))
 
 ;; (use-package nov
 ;;  :ensure t
@@ -163,7 +170,10 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; flychecker
-(flymake-mode t)
+(use-package flymake
+  :hook (prog-mode)
+  :config
+  (remove-hook 'flymake-diagnostic-functions #'flymake-proc-legacy-flymake))
 
 ;; mood line
 (load-file "~/.emacs.d/mood-line.el")
@@ -246,7 +256,6 @@
   :config
   (global-set-key (kbd "C-c C-#") 'focus-mode))
 
-
 ;; ;; dart-mode
 ;; (use-package dart-mode
 ;;   :ensure t)
@@ -274,9 +283,9 @@
   (dirvish-override-dired-mode))
 
 ;; discord
-(load-file "./elcord.el")
-(require 'elcord)
-(elcord-mode)
+;; (load-file "./elcord.el")
+;; (require 'elcord)
+;; (elcord-mode)
 
 ;; remember the last place in a file
 (save-place-mode t)
@@ -294,7 +303,16 @@
 ;; use-package with package.el:
 (use-package dashboard
   :ensure t
-  :custom (initial-buffer-choice 'dashboard-open))
+  :init
+  (setq initial-buffer-choice 'dashboard-open)
+  :config
+  (dashboard-setup-startup-hook)
+
+  (setq dashboard-banner-logo-title "Welcome to Emacs")
+  (setq dashboard-startup-banner 'logo)
+
+  (setq dashboard-center-content t)
+  (setq dashboard-vertically-center-content t))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -302,7 +320,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(gcmh focus dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
+   '(corfu gcmh focus dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
  '(send-mail-function 'mailclient-send-it))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
