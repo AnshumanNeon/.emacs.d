@@ -26,14 +26,6 @@
                                 (when (get-buffer "*scratch*")
 				  (delete-other-windows))))
 
-;; gcmh
-(add-to-list 'load-path "~/.emacs.d/gcmh.el")
-(gcmh-mode t)
-;; (use-package gcmh
-;;   :ensure t
-;;   :config
-;;   (gcmh-mode 1))
-
 ;; font
 (add-to-list 'default-frame-alist
 	     '(font . "FiraCode Nerd Font Mono-10"))
@@ -56,6 +48,8 @@
 ;; 	      '((left . 0)
 ;; 		(width . 0)
 ;; 		(fullscreen . fullboth))))
+
+(toggle-frame-fullscreen)
 
 ;; disable toolbar, menubar and scroll bar
 (tool-bar-mode -1)
@@ -106,6 +100,12 @@
 (when (not (package-installed-p 'use-package))
   (package-refresh-contents)
   (package-install 'use-package))
+
+;; gcmh
+(use-package gcmh
+  :ensure t
+  :config
+  (gcmh-mode t))
 
 ;; themeing
 (load-file "~/.emacs.d/themes.el")
@@ -289,6 +289,12 @@
 ;; (require 'eaf-browser)
 ;; (require 'eaf-markdown-previewer)
 ;; (require 'eaf-org-previewer)
+
+;; use-package with package.el:
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
