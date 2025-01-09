@@ -63,6 +63,9 @@
 ;; highlight links
 (global-goto-address-mode)
 
+;; pretty symbols
+(global-prettify-symbols-mode t)
+
 ;; copy filename to clipboard
 (defun copy-file-name-to-clipboard (do-not-strip-prefix)
   "Copy the current buffer file name to the clipboard using DO-NOT-STRIP-PREFIX."
@@ -256,6 +259,12 @@
   :config
   (global-set-key (kbd "C-c C-#") 'focus-mode))
 
+;; solaire-mode
+(use-package solaire-mode
+  :ensure t
+  :config
+  (solaire-global-mode +1))
+
 ;; ;; dart-mode
 ;; (use-package dart-mode
 ;;   :ensure t)
@@ -279,8 +288,18 @@
 ;; dirvish
 (use-package dirvish
   :ensure t
+  :init
+  (dirvish-override-dired-mode)
   :config
-  (dirvish-override-dired-mode))
+  (setq dirvish-use-mode-line 'global)
+
+  (setq dirvish-mode-line-format
+	'(:left (sort symlink) :right (omit yank index)))
+  (setq dirvish-attributes
+        '(file-time file-size collapse subtree-state vc-state git-msg))
+  (setq delete-by-moving-to-trash t)
+
+  (bind-key "C-c x" 'dirvish-side))
 
 ;; discord
 ;; (load-file "./elcord.el")
@@ -320,7 +339,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(corfu gcmh focus dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
+   '(solaire-mode corfu gcmh focus dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
  '(send-mail-function 'mailclient-send-it))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
