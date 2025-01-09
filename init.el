@@ -43,14 +43,14 @@
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
 ;; set size of startup screen
-;; (setq initial-frame-alist
-;;       (append initial-frame-alist
-;; 	      '((left . 0)
-;; 		(width . 0)
-;; 		(fullscreen . fullboth))))
+(setq initial-frame-alist
+      (append initial-frame-alist
+	      '((left . 0)
+		(width . 0)
+		(fullscreen . fullboth))))
 
 (setq frame-resize-pixelwise t)
-(toggle-frame-fullscreen)
+;; (toggle-frame-fullscreen)
 
 ;; disable toolbar, menubar and scroll bar
 (tool-bar-mode -1)
@@ -124,10 +124,7 @@
 ;;   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
 
 ;; pdf view
-(use-package pdf-tools
-  :ensure t
-  :config
-  (pdf-loader-install))
+(pdf-loader-install)
 
 (defun turn-off-line-numbers ()
   "It turn of line number mode when in pdf-tools mode."
@@ -184,10 +181,6 @@
 ;; god-mode
 (load-file "~/.emacs.d/god-mode.el")
 
-;; parens coloring
-(use-package rainbow-delimiters
-  :ensure t)
-
 ;; golden ratio to handle the buffers
 (use-package golden-ratio
   :ensure t
@@ -198,14 +191,6 @@
 ;; org-mode
 (load-file "~/.emacs.d/org-mode-config.el")
 
-;;go-lang
-(use-package go-mode
-  :mode ("\\.go\\'" . go-mode)
-  :config
-  (autoload 'go-mode "go-mode" nil t)
-  (setq tab-width 4
-	indent-tabs-mode 1))
-
 (defun lsp-go-install-save-hooks ()
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
@@ -215,8 +200,6 @@
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
-  (setq lsp-go-analyses '((shadow . t)
-                          (simplifycompositelit . :json-false)))
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
 	 (c-mode . lsp)
 	 (c++-mode . lsp)
@@ -224,22 +207,6 @@
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
-
-;; multiple-cursors
-(use-package multiple-cursors
-  :ensure t
-  :bind
-  (("C-S-c C-S-c" . mc/edit-lines)
-  ("C->" . mc/mark-next-like-this)
-  ("C-<" . mc/mark-previous-like-this)
-  ("C-c C-<" . mc/mark-all-like-this)))
-
-;; music-player emms
-(use-package emms
-  :ensure t
-  :config
-  (emms-all)
-  (setq emms-player-list '(emms-player-mplayer)))
 
 ;; erc
 (load-file "~/.emacs.d/erc.el")
@@ -252,12 +219,6 @@
   (dimmer-mode t)
   (setq dimmer-fraction 0.4)
   (setq dimmer-watch-frame-focus-events nil))
-
-;; focus-mode
-(use-package focus
-  :ensure t
-  :config
-  (global-set-key (kbd "C-c C-#") 'focus-mode))
 
 ;; solaire-mode
 (use-package solaire-mode
@@ -275,10 +236,6 @@
 ;;   :config
 ;;   (flutter-sdk-path "~/development/flutter"))
 
-;; dumb-jump (jump to definition)
-(use-package dumb-jump
-  :ensure t)
-
 ;; electric-pair
 (electric-pair-mode t)
 
@@ -291,6 +248,7 @@
   :init
   (dirvish-override-dired-mode)
   :config
+  (add-hook 'dirvish-directory-view-mode-hook #'turn-off-line-numbers)
   (setq dirvish-use-mode-line 'global)
 
   (setq dirvish-mode-line-format
@@ -333,13 +291,17 @@
   (setq dashboard-center-content t)
   (setq dashboard-vertically-center-content t))
 
+;; 0x0.st
+(use-package 0x0
+  :ensure t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(solaire-mode corfu gcmh focus dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks ef-themes emacsql-sqlite org-roam dired-sidebar elcord ample-theme dumb-jump flutter dart-mode go-mode emms lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode kaolin-themes magit company-manually auto-complete aggressive-indent))
+   '(0x0 solaire-mode gcmh dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks emacsql-sqlite org-roam dired-sidebar elcord lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode magit company-manually auto-complete aggressive-indent))
  '(send-mail-function 'mailclient-send-it))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
