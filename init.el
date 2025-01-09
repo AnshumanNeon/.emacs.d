@@ -278,16 +278,6 @@
 ;; remember the last place in a file
 (save-place-mode t)
 
-;; eaf apps
-;; (add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-application-framework/")
-;; (require 'eaf)
-;; (require 'eaf-rss-reader)
-;; (require 'eaf-image-viewer)
-;; (require 'eaf-pdf-viewer)
-;; (require 'eaf-browser)
-;; (require 'eaf-markdown-previewer)
-;; (require 'eaf-org-previewer)
-
 ;; use-package with package.el:
 (use-package dashboard
   :ensure t
