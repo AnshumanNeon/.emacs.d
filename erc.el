@@ -20,14 +20,14 @@
       erc-track-exclude-server-buffer t)
 
 (use-package erc-image
-  :ensure t
+  :after (erc)
   :after erc
   :config
   (setq erc-image-inline-rescale 300)
   (add-to-list 'erc-modules 'image))
 
 (use-package emojify
-  :ensure t
+  :after (erc)
   :hook (erc-mode . emojify-mode)
   :commands emojify-mode)
 

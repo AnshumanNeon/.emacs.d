@@ -208,7 +208,6 @@
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 
 (use-package lsp-mode
-  :ensure t
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
@@ -218,14 +217,14 @@
 	 (rust-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  :commands (lsp lsp-deferred))
 
 ;; erc
 (load-file "~/.emacs.d/erc.el")
 
 ;; dimmer.el
 (use-package dimmer
-  :ensure t
+  :defer t
   :config
   (dimmer-configure-which-key)
   (dimmer-mode t)
@@ -234,7 +233,7 @@
 
 ;; solaire-mode
 (use-package solaire-mode
-  :ensure t
+  :defer t
   :config
   (solaire-global-mode +1))
 
@@ -256,7 +255,7 @@
 
 ;; dirvish
 (use-package dirvish
-  :ensure t
+  :after (dired)
   :init
   (dirvish-override-dired-mode)
   :config
@@ -270,6 +269,49 @@
   (setq delete-by-moving-to-trash t)
 
   (bind-key "C-c x" 'dirvish-side))
+
+;; elfeed
+(use-package elfeed
+  :bind ("C-x w" . elfeed)
+
+  :config
+  (add-hook 'elfeed-new-entry-hook (elfeed-make-tagger :before "2 weeks ago" :remove 'unread))
+  ;; feeds
+  (setq elfeed-feeds
+	'(("https://reddit.com/r/linux.rss" reddit linux)
+	  ("https://www.reddit.com/r/emacs.rss" reddit emacs)
+	  ("https://systemcrafters.net/rss/news.xml" emacs)
+	  ("https://www.thehindu.com/feeder/default.rss" india news)
+	  ("https://timesofindia.indiatimes.com/rssfeedstopstories.cms" india news)
+	  ("https://okmij.org/ftp/rss.xml" programming)
+	  ("https://www.stallman.org/rss/rss.xml" stallman)
+	  ("https://www.reddit.com/r/programming/.rss" programming reddit)
+	  ("https://news.ycombinator.com/rss" news tech)
+	  ("https://www.nature.com/nature.rss" science)
+	  ("https://phys.org/rss-feed/" science)
+	  ("https://variety.com/feed/" film))))
+
+;; elfeed-score
+(use-package elfeed-score
+  :after (elfeed)
+  :config
+  (progn
+    (elfeed-score-enable)
+    (define-key elfeed-search-mode-map "=" elfeed-score-map)))
+
+;; elfeed-dashboard
+(use-package elfeed-dashboard
+  :after (elfeed)
+  :config
+  (setq elfeed-dashboard-file "~/elfeed-dashboard.org")
+  ;; update feed counts on elfeed-quit
+  (advice-add 'elfeed-search-quit-window :after #'elfeed-dashboard-update-links))
+
+;; elfeed-goodies
+(use-package elfeed-goodies
+  :after (elfeed)
+  :init
+  (elfeed-goodies/setup))
 
 ;; discord
 ;; (load-file "./elcord.el")
@@ -295,7 +337,7 @@
 
 ;; 0x0.st
 (use-package 0x0
-  :ensure t)
+  :commands (0x0-upload-file 0x0-upload-text))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -303,7 +345,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ultra-scroll 0x0 solaire-mode gcmh dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks emacsql-sqlite org-roam dired-sidebar elcord lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode magit company-manually auto-complete aggressive-indent))
+   '(elfeed-goodies elfeed-dashboard elfeed-score elfeed ultra-scroll 0x0 solaire-mode gcmh dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks emacsql-sqlite org-roam dired-sidebar elcord lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode magit company-manually auto-complete aggressive-indent))
  '(package-vc-selected-packages
    '((ultra-scroll :vc-backend Git :url "https://github.com/jdtsmith/ultra-scroll")))
  '(send-mail-function 'mailclient-send-it))
