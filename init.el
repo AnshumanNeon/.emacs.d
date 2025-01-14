@@ -313,10 +313,23 @@
   :init
   (elfeed-goodies/setup))
 
+;; visual-replace
+(use-package visual-replace
+  :defer t
+  :bind (("C-c r" . visual-replace)
+	 :map isearch-mode-map
+	 ("C-c r" . visual-replace-from-isearch))
+  :config
+  (visual-replace-global-mode))
+
 ;; discord
 ;; (load-file "./elcord.el")
 ;; (require 'elcord)
 ;; (elcord-mode)
+
+;; ement (matrix)
+(use-package ement
+  :ensure t)
 
 ;; remember the last place in a file
 (save-place-mode t)
@@ -345,7 +358,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(auto-package-update elfeed-goodies elfeed-dashboard elfeed-score elfeed ultra-scroll 0x0 solaire-mode gcmh dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks emacsql-sqlite org-roam dired-sidebar elcord lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode magit company-manually auto-complete aggressive-indent))
+   '(visual-replace ement elfeed-goodies elfeed-dashboard elfeed-score elfeed ultra-scroll 0x0 solaire-mode gcmh dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks emacsql-sqlite org-roam dired-sidebar elcord lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode magit company-manually auto-complete aggressive-indent))
  '(package-vc-selected-packages
    '((ultra-scroll :vc-backend Git :url "https://github.com/jdtsmith/ultra-scroll")))
  '(send-mail-function 'mailclient-send-it))
