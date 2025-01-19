@@ -327,6 +327,12 @@
 ;; (require 'elcord)
 ;; (elcord-mode)
 
+;; rainbow-mode
+(use-package rainbow-mode
+  :ensure t
+  :config
+  (rainbow-mode t))
+
 ;; ement (matrix)
 (use-package ement
   :ensure t)
@@ -358,7 +364,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(visual-replace ement elfeed-goodies elfeed-dashboard elfeed-score elfeed ultra-scroll 0x0 solaire-mode gcmh dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks emacsql-sqlite org-roam dired-sidebar elcord lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode magit company-manually auto-complete aggressive-indent))
+   '(rainbow-mode visual-replace ement elfeed-goodies elfeed-dashboard elfeed-score elfeed ultra-scroll 0x0 solaire-mode gcmh dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks emacsql-sqlite org-roam dired-sidebar elcord lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode magit company-manually auto-complete aggressive-indent))
  '(package-vc-selected-packages
    '((ultra-scroll :vc-backend Git :url "https://github.com/jdtsmith/ultra-scroll")))
  '(send-mail-function 'mailclient-send-it))
