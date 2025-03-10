@@ -58,6 +58,11 @@
 (menu-bar-mode -1)
 (tooltip-mode -1)
 
+(use-package exec-path-from-shell
+  :ensure t
+  :init
+  (exec-path-from-shell-initialize))
+
 ;; scrolling
 (use-package ultra-scroll
   ;:load-path "~/code/emacs/ultra-scroll" ; if you git clone'd instead of package-vc-install
@@ -237,6 +242,15 @@
   :config
   (solaire-global-mode +1))
 
+;; mutliple-cursors
+(use-package multiple-cursors
+  :ensure t
+  :config
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+
 ;; ;; dart-mode
 ;; (use-package dart-mode
 ;;   :ensure t)
@@ -269,49 +283,6 @@
   (setq delete-by-moving-to-trash t)
 
   (bind-key "C-c x" 'dirvish-side))
-
-;; elfeed
-(use-package elfeed
-  :bind ("C-x w" . elfeed)
-
-  :config
-  (add-hook 'elfeed-new-entry-hook (elfeed-make-tagger :before "2 weeks ago" :remove 'unread))
-  ;; feeds
-  (setq elfeed-feeds
-	'(("https://reddit.com/r/linux.rss" reddit linux)
-	  ("https://www.reddit.com/r/emacs.rss" reddit emacs)
-	  ("https://systemcrafters.net/rss/news.xml" emacs)
-	  ("https://www.thehindu.com/feeder/default.rss" india news)
-	  ("https://timesofindia.indiatimes.com/rssfeedstopstories.cms" india news)
-	  ("https://okmij.org/ftp/rss.xml" programming)
-	  ("https://www.stallman.org/rss/rss.xml" stallman)
-	  ("https://www.reddit.com/r/programming/.rss" programming reddit)
-	  ("https://news.ycombinator.com/rss" news tech)
-	  ("https://www.nature.com/nature.rss" science)
-	  ("https://phys.org/rss-feed/" science)
-	  ("https://variety.com/feed/" film))))
-
-;; elfeed-score
-(use-package elfeed-score
-  :after (elfeed)
-  :config
-  (progn
-    (elfeed-score-enable)
-    (define-key elfeed-search-mode-map "=" elfeed-score-map)))
-
-;; elfeed-dashboard
-(use-package elfeed-dashboard
-  :after (elfeed)
-  :config
-  (setq elfeed-dashboard-file "~/elfeed-dashboard.org")
-  ;; update feed counts on elfeed-quit
-  (advice-add 'elfeed-search-quit-window :after #'elfeed-dashboard-update-links))
-
-;; elfeed-goodies
-(use-package elfeed-goodies
-  :after (elfeed)
-  :init
-  (elfeed-goodies/setup))
 
 ;; visual-replace
 (use-package visual-replace
@@ -354,15 +325,6 @@
   (setq dashboard-center-content t)
   (setq dashboard-vertically-center-content t))
 
-;; emms
-(use-package emms
-  :ensure t
-  :config
-  (emms-all)
-  (setq emms-player-vlc-command-name "/Applications/VLC.app/Contents/MacOS/VLC")
-  (setq emms-player-list '(emms-player-vlc)
-	emms-info-functions '(emms-info-native)))
-
 ;; 0x0.st
 (use-package 0x0
   :commands (0x0-upload-file 0x0-upload-text))
@@ -373,7 +335,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(emms ready-player rainbow-mode visual-replace ement elfeed-goodies elfeed-dashboard elfeed-score elfeed ultra-scroll 0x0 solaire-mode gcmh dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks emacsql-sqlite org-roam dired-sidebar elcord lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode magit company-manually auto-complete aggressive-indent))
+   '(exec-path-from-shell exec-paht-from-shell auctex multiple-cursors emms ready-player rainbow-mode visual-replace ement elfeed-goodies elfeed-dashboard elfeed-score elfeed ultra-scroll 0x0 solaire-mode gcmh dimmer org-autolist doom-themes zenburn-theme gruvbox-theme emojify erc-image erc-hl-nicks emacsql-sqlite org-roam dired-sidebar elcord lsp-mode nov visual-fill-column golden-ratio org-bullets all-the-icons treemacs god-mode ## smartparens-global-mode smartparens-mode magit company-manually auto-complete aggressive-indent))
  '(package-vc-selected-packages
    '((ultra-scroll :vc-backend Git :url "https://github.com/jdtsmith/ultra-scroll")))
  '(send-mail-function 'mailclient-send-it))
