@@ -13,6 +13,8 @@
 /site-lisp
 /emms
 /multisession
+/autosaves
+/image-dired
 
 history
 smex-items
