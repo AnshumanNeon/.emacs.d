@@ -114,12 +114,12 @@ _C_: customize profiler options
   ("l" image-forward-hscroll :color red)
   ("h" image-backward-hscroll :color red))
 
-                                        ; origami code folding
+                                      ; origami code folding
 
 (defhydra hydra-folding (:color red)
   "
   _o_pen node    _n_ext fold       toggle _f_orward  _s_how current only
-  _c_lose node   _p_revious fold   toggle _a_ll
+  _c_lose node   _p_revious fold   toggle _a_ll      _q_uit
   "
   ("o" origami-open-node)
   ("c" origami-close-node)
@@ -127,6 +127,7 @@ _C_: customize profiler options
   ("p" origami-previous-fold)
   ("f" origami-forward-toggle-node)
   ("a" origami-toggle-all-nodes)
-  ("s" origami-show-only-node))
+  ("s" origami-show-only-node)
+  ("q" nil))
 
 (global-set-key (kbd "H-C-f") 'hydra-folding/body)

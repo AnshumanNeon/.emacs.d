@@ -21,9 +21,7 @@
         ("MELPA"        . 15)
         ("MELPA Stable" . 0)))
 
-(setq
- ns-function-modifier
- 'hyper)
+(setq ns-function-modifier 'hyper)
 
 (set-language-environment "UTF-8")
 (prefer-coding-system 'utf-8)
@@ -96,23 +94,20 @@
 (electric-indent-mode t)
 (electric-pair-mode t)
 
+(load-file "~/.emacs.d/themes.el")
+
 (use-package doom-modeline
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
 (use-package ultra-scroll
-  ;:load-path "~/code/emacs/ultra-scroll" ; if you git clone'd instead of using vc
+                                        ;:load-path "~/code/emacs/ultra-scroll" ; if you git clone'd instead of using vc
   ;;:vc (:url "https://github.com/jdtsmith/ultra-scroll") ; For Emacs>=30
   :init
   (setq scroll-conservatively 101 ; important!
         scroll-margin 0) 
   :config
   (ultra-scroll-mode 1))
-
-(use-package gruvbox-theme
-  :ensure t
-  :config
-  (load-theme 'gruvbox-dark-medium t))
 
 ;; A startup screen extracted from Spacemacs
 (use-package dashboard
@@ -163,7 +158,7 @@
   (setq dirvish-use-mode-line 'global)
 
   (setq dirvish-mode-line-format
-	'(:left (sort symlink) :right (omit yank index)))
+	    '(:left (sort symlink) :right (omit yank index)))
   (setq dirvish-attributes
         '(file-time file-size collapse subtree-state vc-state git-msg))
   (setq delete-by-moving-to-trash t)
@@ -211,35 +206,67 @@
   :ensure t)
 
 (use-package pdf-tools
-    :ensure t
-    :config
-    (pdf-tools-install)
-    (setq-default pdf-view-display-size 'fit-page)
-    (bind-keys :map pdf-view-mode-map
-        ("\\" . hydra-pdftools/body)
-        ("<s-spc>" .  pdf-view-scroll-down-or-next-page)
-        ("g"  . pdf-view-first-page)
-        ("G"  . pdf-view-last-page)
-        ("l"  . image-forward-hscroll)
-        ("h"  . image-backward-hscroll)
-        ("j"  . pdf-view-next-page)
-        ("k"  . pdf-view-previous-page)
-        ("e"  . pdf-view-goto-page)
-        ("u"  . pdf-view-revert-buffer)
-        ("al" . pdf-annot-list-annotations)
-        ("ad" . pdf-annot-delete)
-        ("aa" . pdf-annot-attachment-dired)
-        ("am" . pdf-annot-add-markup-annotation)
-        ("at" . pdf-annot-add-text-annotation)
-        ("y"  . pdf-view-kill-ring-save)
-        ("i"  . pdf-misc-display-metadata)
-        ("s"  . pdf-occur)
-        ("b"  . pdf-view-set-slice-from-bounding-box)
-        ("r"  .
-         pdf-view-reset-slice)))
+  :ensure t
+  :hook (pdf-view-mode . display-line-numbers-mode)
+  :config
+  (pdf-tools-install)
+  (setq-default pdf-view-display-size 'fit-page)
+  (bind-keys :map pdf-view-mode-map
+             ("\\" . hydra-pdftools/body)
+             ("<s-spc>" .  pdf-view-scroll-down-or-next-page)
+             ("g"  . pdf-view-first-page)
+             ("G"  . pdf-view-last-page)
+             ("l"  . image-forward-hscroll)
+             ("h"  . image-backward-hscroll)
+             ("j"  . pdf-view-next-page)
+             ("k"  . pdf-view-previous-page)
+             ("e"  . pdf-view-goto-page)
+             ("u"  . pdf-view-revert-buffer)
+             ("al" . pdf-annot-list-annotations)
+             ("ad" . pdf-annot-delete)
+             ("aa" . pdf-annot-attachment-dired)
+             ("am" . pdf-annot-add-markup-annotation)
+             ("at" . pdf-annot-add-text-annotation)
+             ("y"  . pdf-view-kill-ring-save)
+             ("i"  . pdf-misc-display-metadata)
+             ("s"  . pdf-occur)
+             ("b"  . pdf-view-set-slice-from-bounding-box)
+             ("r"  .
+              pdf-view-reset-slice)))
 
 (use-package origami
   :ensure t)
+
+(use-package lsp-mode
+  :hook ((c-mode c++-mode go-mode python-mode sql-mode) . lsp-deferred)
+  :commands lsp)
+
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+
+(use-package avy
+  :ensure t
+  :bind (("M-j" . avy-goto-char-timer)))
+
+(use-package jinx
+  :hook ((text-mode . jinx-mode)
+         (org-mode . jinx-mode))
+  :bind ("C-;" . jinx-correct))
+
+(use-package corfu
+  :init
+  (global-corfu-mode t)
+  (corfu-history-mode t)
+  (corfu-popupinfo-mode t)
+  :config
+  (setq corfu-cycle t))
+
+(use-package cape
+  :bind ("C-c p" . cape-prefix-map)
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
 (load-file "~/.emacs.d/hydras.el")
 (load-file "~/.emacs.d/org-mode.el")
@@ -251,11 +278,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(corfu corral dimmer dirvish doom-modeline emojify erc-image golden-ratio
-           gruvbox-theme gruvbox-themes hydra kanagawa-themes magit marginalia
-           nano-modeline org-bullets org-mode org-pdfview org-super-agenda
-           org-super-agenda-mode origami origami-mode pdf-tools rainbow-mode
-           smart-mode-line solaire-mode ultra-scroll use-package-hydra))
+   '(adaptive-wrap avy cape corfu corral dashboard diff-hl dimmer dirvish
+                   doom-modeline emojify erc-image focus golden-ratio
+                   gruvbox-theme hydra jinx kanagawa-themes kaolin-themes
+                   lsp-ui magit marginalia mood-line nano-modeline olivetti
+                   org-bullets org-super-agenda origami pdf-tools rainbow-mode
+                   solaire-mode ultra-scroll use-package-hydra))
  '(package-vc-selected-packages
    '((ultra-scroll :vc-backend Git :url "https://github.com/jdtsmith/ultra-scroll"))))
 (custom-set-faces

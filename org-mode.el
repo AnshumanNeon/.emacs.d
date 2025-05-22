@@ -64,6 +64,7 @@
         ;; activities
         ("@pen" . ?P)
         ("@programming" . ?p)
+        ("@emacs" . ?e)
         ("@questions" . ?q)
         ("@lectures" . ?l)
         ("@homework" . ?h)
@@ -183,6 +184,10 @@
                        (:name "Films left to watch or currently watching"
                               :tag "@cinema"
                               :order 10)
+                       ;; Filter where tag is "emacs"
+                       (:name "Emacs Stuff"
+                              :tag "@emacs"
+                              :order 11)
                        ;; Filter where tag is "programming"
                        (:name "Programming"
                               :tag "@programming"
