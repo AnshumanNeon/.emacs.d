@@ -4,5 +4,7 @@ elpa/
 games/
 history
 site-lisp/
+transient/
+
 init.el~
 theme.el~

@@ -50,8 +50,7 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; magit
-;; instal magit
-
+;; install magit
 
 ;; ----------------------------------------------------------
 ;; ----------------------------------------------------------
@@ -61,17 +60,11 @@
 ;; and `package-pinned-packages`. Most users will not need or want to do this.
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("9b21c848d09ba7df8af217438797336ac99cbbbc87a08dc879e9291673a6a631"
-     "fc1275617f9c8d1c8351df9667d750a8e3da2658077cfdda2ca281a2ebc914e0"
-     "73911b9ca48d0db91e4016c8d6e6f6438ca9435171350343fd6b5f35a9b5ef68"
-     default))
  '(package-selected-packages
    '(## company magit punch-line telephone-line transient with-editor)))
 (custom-set-faces
