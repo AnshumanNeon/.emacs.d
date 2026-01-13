@@ -31,8 +31,8 @@
 (switch-to-buffer (get-buffer-create "new"))
 (delete-other-windows)
 
-;; cmd+z is undo
-(global-set-key (kbd "C-z ") 'undo)
+;; import hydras
+(load-file "~/.emacs.d/hydras.el")
 
 ;; M is cmd key
 (setq mac-option-modifier nil
@@ -53,6 +53,8 @@
 ;; magit
 ;; install magit
 (require 'magit)
+(setq magit-refresh-status-buffer nil)
+(global-set-key (kbd "C-c g") 'hydra-magit/body)
 
 ;; golden-ratio
 ;; install golden-ratio
@@ -71,7 +73,9 @@
 ;; ----------------------------------------------------------
 ;; ----------------------------------------------------------
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
 ;; and `package-pinned-packages`. Most users will not need or want to do this.
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -82,8 +86,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(## company golden-ratio magit punch-line telephone-line transient
-	with-editor)))
+   '(## company golden-ratio hydra magit punch-line telephone-line
+	transient with-editor)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
