@@ -21,10 +21,10 @@
 
 ;; global line number
 (global-display-line-numbers-mode t)
+(setq display-line-numbers-type 'relative)
 (global-hl-line-mode t)
 (show-paren-mode t)
 (column-number-mode t)
-(setq display-line-numbers 'relative)
 
 ;; start blank
 (setf inhibit-splash-screen t)
