@@ -70,6 +70,14 @@
 (require 'golden-ratio)
 (golden-ratio-mode t)
 
+;; pdf-tools
+;; install pdf-tools
+(require 'pdf-tools)
+(pdf-loader-install)
+(add-to-list 'auto-mode-alist '("\\.pdf" . pdf-view-mode))
+(setq-default pdf-view-use-unicode-ligther 0
+	      pdf-view-display-size 'fit-page)
+
 ;; nswbuff
 ;; used for buffer switching, press C-<tab> to show a list of which buffer to switch in case
 ;; you have a lot of buffers to switch from
@@ -95,7 +103,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(## company delight golden-ratio hydra magit punch-line
+   '(## company delight golden-ratio hydra magit pdf-tools punch-line
 	telephone-line transient with-editor)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
