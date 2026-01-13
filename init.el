@@ -46,11 +46,13 @@
 (show-paren-mode t)
 
 ;; company-mode (for completion)
+(require 'company)
 ;; install company-mode
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; magit
 ;; install magit
+(require 'magit)
 
 ;; ----------------------------------------------------------
 ;; ----------------------------------------------------------
