@@ -59,6 +59,15 @@
 (require 'golden-ratio)
 (golden-ratio-mode t)
 
+;; nswbuff
+;; used for buffer switching, press C-<tab> to show a list of which buffer to switch in case
+;; you have a lot of buffers to switch from
+;; ----------------------------------------------------------
+;; install nswbuff
+(require 'nswbuff)
+(global-set-key (kbd "C-<tab>") 'nswbuff-switch-to-next-buffer)
+(global-set-key (kbd "C-S-<tab>") 'nswbuff-switch-to-previous-buffer)
+
 ;; ----------------------------------------------------------
 ;; ----------------------------------------------------------
 (require 'package)
