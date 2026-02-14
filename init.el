@@ -54,6 +54,9 @@
 ;; paren matching
 (show-paren-mode t)
 
+;; load org config
+(load-file "~/.emacs.d/org-mode.el")
+
 ;; company-mode (for completion)
 (require 'company)
 ;; install company-mode
@@ -64,6 +67,10 @@
 (require 'magit)
 (setq magit-refresh-status-buffer nil)
 (global-set-key (kbd "C-c g") 'hydra-magit/body)
+
+;; discord rich presence
+(load-file "~/.emacs.d/site-lisp/elcord/elcord.el")
+(elcord-mode t)
 
 ;; golden-ratio
 ;; install golden-ratio
@@ -103,8 +110,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(## company delight golden-ratio hydra magit pdf-tools punch-line
-	telephone-line transient with-editor)))
+   '(## company delight golden-ratio hydra magit org-bullets pdf-tools
+	punch-line telephone-line transient with-editor)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
