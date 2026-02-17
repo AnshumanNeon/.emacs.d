@@ -70,10 +70,6 @@
 (setq magit-refresh-status-buffer nil)
 (global-set-key (kbd "C-c g") 'hydra-magit/body)
 
-;; discord rich presence
-(load-file "~/.emacs.d/site-lisp/elcord/elcord.el")
-(elcord-mode t)
-
 ;; golden-ratio
 ;; install golden-ratio
 (require 'golden-ratio)
