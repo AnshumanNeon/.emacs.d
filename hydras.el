@@ -66,23 +66,22 @@
   (switch-to-buffer-other-window
    (nth (1- arg) my/last-buffers)))
 
-(global-set-key
- "\C-o"
- (defhydra my/switch-to-buffer (:exit t :quit-key "<escape>"
-                                :body-pre (setq my/last-buffers
-                                                (my/name-of-buffers 4)))
-   "
+(defhydra my/switch-to-buffer (:exit t :quit-key "<escape>"
+                                     :body-pre (setq my/last-buffers
+                                                     (my/name-of-buffers 4)))
+  "
 _o_ther buffers: %s(my/number-names my/last-buffers)
 
 "
-   ("o" my/switch-to-buffer "this window")
-   ("O" my/switch-to-buffer-other-window "other window")
-   ("<escape>" nil)))
+  ("o" my/switch-to-buffer "this window")
+  ("O" my/switch-to-buffer-other-window "other window")
+  ("<escape>" nil))
+(global-set-key (kbd "C-c o") 'my/switch-to-buffer/body)
 
 ;; window operations (yes copied from hydras wiki)
 ;; -------------------------------------
- (defhydra hydra-window ()
-   "
+(defhydra hydra-window ()
+  "
 Movement^^        ^Split^         ^Switch^		^Resize^
 ----------------------------------------------------------------
 _h_ ←       	_v_ertical    	_b_uffer		_q_ X←
@@ -92,55 +91,56 @@ _l_ →        	_Z_ reset      	_s_wap		_r_ X→
 _F_ollow		_D_lt Other   	_S_ave		max_i_mize
 _SPC_ cancel	_o_nly this   	_d_elete	
 "
-   ("h" windmove-left )
-   ("j" windmove-down )
-   ("k" windmove-up )
-   ("l" windmove-right )
-   ("q" hydra-move-splitter-left)
-   ("w" hydra-move-splitter-down)
-   ("e" hydra-move-splitter-up)
-   ("r" hydra-move-splitter-right)
-   ("b" helm-mini)
-   ("f" helm-find-files)
-   ("F" follow-mode)
-   ("a" (lambda ()
-          (interactive)
-          (ace-window 1)
-          (add-hook 'ace-window-end-once-hook
-                    'hydra-window/body))
-       )
-   ("v" (lambda ()
-          (interactive)
-          (split-window-right)
-          (windmove-right))
-       )
-   ("x" (lambda ()
-          (interactive)
-          (split-window-below)
-          (windmove-down))
-       )
-   ("s" (lambda ()
-          (interactive)
-          (ace-window 4)
-          (add-hook 'ace-window-end-once-hook
-                    'hydra-window/body)))
-   ("S" save-buffer)
-   ("d" delete-window)
-   ("D" (lambda ()
-          (interactive)
-          (ace-window 16)
-          (add-hook 'ace-window-end-once-hook
-                    'hydra-window/body))
-       )
-   ("o" delete-other-windows)
-   ("i" ace-maximize-window)
-   ("z" (progn
-          (winner-undo)
-          (setq this-command 'winner-undo))
+  ("h" windmove-left )
+  ("j" windmove-down )
+  ("k" windmove-up )
+  ("l" windmove-right )
+  ("q" hydra-move-splitter-left)
+  ("w" hydra-move-splitter-down)
+  ("e" hydra-move-splitter-up)
+  ("r" hydra-move-splitter-right)
+  ("b" helm-mini)
+  ("f" helm-find-files)
+  ("F" follow-mode)
+  ("a" (lambda ()
+         (interactive)
+         (ace-window 1)
+         (add-hook 'ace-window-end-once-hook
+                   'hydra-window/body))
    )
-   ("Z" winner-redo)
-   ("SPC" nil)
+  ("v" (lambda ()
+         (interactive)
+         (split-window-right)
+         (windmove-right))
    )
+  ("x" (lambda ()
+         (interactive)
+         (split-window-below)
+         (windmove-down))
+   )
+  ("s" (lambda ()
+         (interactive)
+         (ace-window 4)
+         (add-hook 'ace-window-end-once-hook
+                   'hydra-window/body)))
+  ("S" save-buffer)
+  ("d" delete-window)
+  ("D" (lambda ()
+         (interactive)
+         (ace-window 16)
+         (add-hook 'ace-window-end-once-hook
+                   'hydra-window/body))
+   )
+  ("o" delete-other-windows)
+  ("i" ace-maximize-window)
+  ("z" (progn
+         (winner-undo)
+         (setq this-command 'winner-undo))
+   )
+  ("Z" winner-redo)
+  ("SPC" nil)
+  )
+(global-set-key (kbd "C-c w") 'hydra-window/body)
 ;; --------------------------------------------
 
 ;; rectangle hydra (yes copied from hydras wiki)
