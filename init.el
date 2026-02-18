@@ -123,7 +123,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(## cheatsheet company delight golden-ratio hydra magit org-bullets
-	pdf-tools punch-line telephone-line transient with-editor)))
+	org-super-agenda pdf-tools punch-line telephone-line transient
+	with-editor)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
