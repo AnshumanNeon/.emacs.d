@@ -25,4 +25,7 @@
 		'(:key "C-o" :description "opens window switching hydra")
 		'(:key "C-c w" :description "open window operations hydra")
 		'(:key "C-x SPC" :description "opens rectangle operations hydra")
+		'(:key "C-c a" :description "opens org agenda")
+		'(:key "C-c ," :description "opens org priorty menu")
+		'(:key "C-c C-q" :description "opens org tag menu")
 		)
