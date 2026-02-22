@@ -177,3 +177,8 @@
           )))
 
 (setq-default org-agenda-window-setup 'current-window)
+
+;; habits
+(require 'org-habit)
+(setq org-habit-toggle-display-in-agenda t)
+(add-to-list 'org-modules 'org-habit)
