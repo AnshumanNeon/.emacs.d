@@ -57,7 +57,7 @@
 (show-paren-mode t)
 
 ;; load org config
-(load-file "~/.emacs.d/org-mode.el")
+(add-to-list 'auto-mode-alist '("\\.org" . (load-file "~/.emacs.d/org-mode.el")))
 
 ;; company-mode (for completion)
 (require 'company)
