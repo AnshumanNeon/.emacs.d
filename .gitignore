@@ -8,6 +8,5 @@ site-lisp/
 transient/
 eshell/
 
-init.el~
-theme.el~
+*.el~
 

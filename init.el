@@ -1,4 +1,7 @@
-;; init.el file
+;;; ----------------------------------------------
+;;;                 Init config
+;;; ----------------------------------------------
+
 ;; disable some useless modes
 (tool-bar-mode -1)
 (menu-bar-mode t)
@@ -131,3 +134,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;;; ----------------------------------------------
+;;; ----------------------------------------------

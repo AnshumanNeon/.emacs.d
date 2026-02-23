@@ -1,4 +1,6 @@
-;; theme.el file
+;;; ----------------------------------------------
+;;;                 Theme config
+;;; ----------------------------------------------
 
 ;; load timu-spacegrey theme
 (add-to-list 'load-path (concat user-emacs-directory "site-lisp"))
@@ -21,3 +23,6 @@
         (evil   . (telephone-line-airline-position-segment))))
 ;; enable telephone-line
 (telephone-line-mode t)
+
+;;; ----------------------------------------------
+;;; ----------------------------------------------
