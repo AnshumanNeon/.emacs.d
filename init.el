@@ -59,8 +59,11 @@
 ;; paren matching
 (show-paren-mode t)
 
-;; load org config
+;; load org config when you open an org file
 (add-to-list 'auto-mode-alist '("\\.org" . (load-file "~/.emacs.d/org-mode.el")))
+
+;; but load the org agenda right away
+(load-file "~/.emacs.d/org-agenda.el")
 
 ;; company-mode (for completion)
 (require 'company)
