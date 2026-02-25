@@ -101,7 +101,7 @@
 
 ;; symbol-overlay
 ;; highlight all instances of a symbol and do some shit you want on it
-(load-file "./site-lisp/symbol-overlay/symbol-overlay.el")
+(load-file "./.emacs.d/site-lisp/symbol-overlay/symbol-overlay.el")
 (global-set-key (kbd "M-i") 'symbol-overlay-put)
 (global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
 (global-set-key (kbd "M-p") 'symbol-overlay-switch-backward)
