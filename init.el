@@ -60,7 +60,8 @@
 (show-paren-mode t)
 
 ;; load org config when you open an org file
-(add-to-list 'auto-mode-alist '("\\.org" . (load-file "~/.emacs.d/org-mode.el")))
+;; (add-to-list 'auto-mode-alist '("\\.org" . (load-file "~/.emacs.d/org-mode.el")))
+(load-file "~/.emacs.d/org-mode.el")
 
 ;; but load the org agenda right away
 (load-file "~/.emacs.d/org-agenda.el")
@@ -97,6 +98,25 @@
 (require 'nswbuff)
 (global-set-key (kbd "C-<tab>") 'nswbuff-switch-to-next-buffer)
 (global-set-key (kbd "C-S-<tab>") 'nswbuff-switch-to-previous-buffer)
+
+;; symbol-overlay
+;; highlight all instances of a symbol and do some shit you want on it
+(load-file "./site-lisp/symbol-overlay/symbol-overlay.el")
+(global-set-key (kbd "M-i") 'symbol-overlay-put)
+(global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
+(global-set-key (kbd "M-p") 'symbol-overlay-switch-backward)
+(global-set-key (kbd "C-c s") 'symbol-overlay-mode)
+(global-set-key (kbd "C-c r") 'symbol-overlay-remove-all)
+;; "i" -> symbol-overlay-put
+;; "n" -> symbol-overlay-jump-next
+;; "p" -> symbol-overlay-jump-prev
+;; "w" -> symbol-overlay-save-symbol
+;; "t" -> symbol-overlay-toggle-in-scope
+;; "e" -> symbol-overlay-echo-mark
+;; "d" -> symbol-overlay-jump-to-definition
+;; "s" -> symbol-overlay-isearch-literally
+;; "q" -> symbol-overlay-query-replace
+;; "r" -> symbol-overlay-rename
 
 ;; open cheatsheets
 (cheatsheet-show)
