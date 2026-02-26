@@ -28,4 +28,6 @@
 		'(:key "C-c a" :description "opens org agenda")
 		'(:key "C-c ," :description "opens org priorty menu")
 		'(:key "C-c C-q" :description "opens org tag menu")
+		'(:key "C-c m" :description "opens multiple cursors")
+		'(:key "C-c s" :description "opens symbol overlap")
 		)

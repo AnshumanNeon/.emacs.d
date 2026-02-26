@@ -177,16 +177,6 @@ _h_   _l_     _y_ank        _t_ype       _e_xchange-point          /,`.-'`'   ..
 (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
 ;; ----------------------------------------
 
-;; "i" -> symbol-overlay-put
-;; "n" -> symbol-overlay-jump-next
-;; "p" -> symbol-overlay-jump-prev
-;; "w" -> symbol-overlay-save-symbol
-;; "t" -> symbol-overlay-toggle-in-scope
-;; "e" -> symbol-overlay-echo-mark
-;; "d" -> symbol-overlay-jump-to-definition
-;; "s" -> symbol-overlay-isearch-literally
-;; "q" -> symbol-overlay-query-replace
-;; "r" -> symbol-overlay-rename
 
 ;; symbol-overlay (highlight symbols)
 (defhydra hydra-symbol-overlay (:color red :columns 3 :quit-key "<escape>")
@@ -207,5 +197,26 @@ _h_   _l_     _y_ank        _t_ype       _e_xchange-point          /,`.-'`'   ..
   ("R" symbol-overlay-remove-all "remove all")
   ("SPC" nil "quit"))
 (global-set-key (kbd "C-c s") 'hydra-symbol-overlay/body)
+
+;; multiple-cursors
+(defhydra hydra-multiple-cursors (:hint nil)
+  "
+     ^Up^            ^Down^        ^Miscellaneous^
+----------------------------------------------
+[_p_]   Next    [_n_]   Next    [_l_] Edit lines
+[_P_]   Skip    [_N_]   Skip    [_a_] Mark all
+[_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
+  ("l" mc/edit-lines :exit t) ;; add a cursor to each line in an active selected region
+  ;; When you want to add multiple cursors not based on continuous lines, but based on keywords in the buffer, use:
+  ("a" mc/mark-all-like-this :exit t)
+  ("n" mc/mark-next-like-this)
+  ("N" mc/skip-to-next-like-this)
+  ("M-n" mc/unmark-next-like-this)
+  ("p" mc/mark-previous-like-this)
+  ("P" mc/skip-to-previous-like-this)
+  ("M-p" mc/unmark-previous-like-this)
+  ("q" nil))
+(global-set-key (kbd "C-c m") 'hydra-multiple-cursors/body)
+
 ;;; ----------------------------------------------
 ;;; ----------------------------------------------
