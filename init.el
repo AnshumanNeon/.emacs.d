@@ -89,6 +89,7 @@
 (add-to-list 'auto-mode-alist '("\\.pdf" . pdf-view-mode))
 (setq-default pdf-view-use-unicode-ligther 0
 	      pdf-view-display-size 'fit-page)
+(add-hook 'pdf-view-mode-hook '(global-display-line-numbers-mode 0))
 
 ;; nswbuff
 ;; used for buffer switching, press C-<tab> to show a list of which buffer to switch in case
@@ -102,21 +103,7 @@
 ;; symbol-overlay
 ;; highlight all instances of a symbol and do some shit you want on it
 (load-file "./.emacs.d/site-lisp/symbol-overlay/symbol-overlay.el")
-(global-set-key (kbd "M-i") 'symbol-overlay-put)
-(global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
-(global-set-key (kbd "M-p") 'symbol-overlay-switch-backward)
-(global-set-key (kbd "C-c s") 'symbol-overlay-mode)
-(global-set-key (kbd "C-c r") 'symbol-overlay-remove-all)
-;; "i" -> symbol-overlay-put
-;; "n" -> symbol-overlay-jump-next
-;; "p" -> symbol-overlay-jump-prev
-;; "w" -> symbol-overlay-save-symbol
-;; "t" -> symbol-overlay-toggle-in-scope
-;; "e" -> symbol-overlay-echo-mark
-;; "d" -> symbol-overlay-jump-to-definition
-;; "s" -> symbol-overlay-isearch-literally
-;; "q" -> symbol-overlay-query-replace
-;; "r" -> symbol-overlay-rename
+;; hydras already set in hydras.el
 
 ;; open cheatsheets
 (cheatsheet-show)

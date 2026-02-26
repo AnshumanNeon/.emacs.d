@@ -3,6 +3,8 @@
 ;;; ----------------------------------------------
 
 ;; install hydra
+
+;; zoom
 (defhydra hydra-zoom (global-map "C-c =")
   "zoom"
   ("+" text-scale-increase "in")
@@ -175,5 +177,35 @@ _h_   _l_     _y_ank        _t_ype       _e_xchange-point          /,`.-'`'   ..
 (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
 ;; ----------------------------------------
 
+;; "i" -> symbol-overlay-put
+;; "n" -> symbol-overlay-jump-next
+;; "p" -> symbol-overlay-jump-prev
+;; "w" -> symbol-overlay-save-symbol
+;; "t" -> symbol-overlay-toggle-in-scope
+;; "e" -> symbol-overlay-echo-mark
+;; "d" -> symbol-overlay-jump-to-definition
+;; "s" -> symbol-overlay-isearch-literally
+;; "q" -> symbol-overlay-query-replace
+;; "r" -> symbol-overlay-rename
+
+;; symbol-overlay (highlight symbols)
+(defhydra hydra-symbol-overlay (:color red :columns 3 :quit-key "<escape>")
+  "Symbol Overlay"
+  ("s" symbol-overlay-mode "toggle symbol overlay")
+  ("i" symbol-overlay-put "put")
+  ("n" symbol-overlay-jump-next "jump forward")
+  ("p" symbol-overlay-jump-prev "jump backward")
+  ("N" symbol-overlay-switch-forward "switch forward")
+  ("P" symbol-overlay-switch-backward "switch backward")
+  ("w" symbol-overlay-save-symbol "save symbol")
+  ("t" symbol-overlay-toggle-in-scope "toggle in scope")
+  ("e" symbol-overlay-echo-mark "echo mark")
+  ("d" symbol-overlay-jump-to-definition "jump to definition")
+  ("S" symbol-overlay-isearch-literally "isearch")
+  ("q" symbol-overlay-query-replace "query replace")
+  ("r" symbol-overlay-rename "rename")
+  ("R" symbol-overlay-remove-all "remove all")
+  ("SPC" nil "quit"))
+(global-set-key (kbd "C-c s") 'hydra-symbol-overlay/body)
 ;;; ----------------------------------------------
 ;;; ----------------------------------------------
