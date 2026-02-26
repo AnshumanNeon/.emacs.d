@@ -30,4 +30,5 @@
 		'(:key "C-c C-q" :description "opens org tag menu")
 		'(:key "C-c m" :description "opens multiple cursors")
 		'(:key "C-c s" :description "opens symbol overlap")
+		'(:key "C-c h" :description "opens help hydra")
 		)

@@ -198,7 +198,7 @@ _h_   _l_     _y_ank        _t_ype       _e_xchange-point          /,`.-'`'   ..
   ("SPC" nil "quit"))
 (global-set-key (kbd "C-c s") 'hydra-symbol-overlay/body)
 
-;; multiple-cursors
+;; multiple-cursors (courtesy cqql from reddit)
 (defhydra hydra-multiple-cursors (:hint nil)
   "
      ^Up^            ^Down^        ^Miscellaneous^
@@ -217,6 +217,52 @@ _h_   _l_     _y_ank        _t_ype       _e_xchange-point          /,`.-'`'   ..
   ("M-p" mc/unmark-previous-like-this)
   ("q" nil))
 (global-set-key (kbd "C-c m") 'hydra-multiple-cursors/body)
+
+;; help hydras (courtesy sledgespread from reddit)
+(defhydra hydra-help (:exit t)
+    ;; Better to exit after any command because otherwise helm gets in a
+    ;; mess, set hint to nil: written out manually.
+
+    "
+  Describe        ^^Keys                    ^^Search                    ^^Documentation
+  ---------------------------------------------------------------------------------------
+  _f_unction        _k_eybinding              _a_propros                  _i_nfo
+  _p_ackage         _w_here-is                _d_oc strings            
+  _m_ode            _b_: show all bindings    _s_: info by symbol         
+  _v_ariable
+
+  "
+    ;; Boring help commands...
+    ("e" view-echo-area-messages "messages")
+    ("l" view-lossage "lossage")
+    ("C" describe-coding-system "coding-system")
+    ("I" describe-input-method "input-method")
+
+
+    ;; Documentation
+    ("i" info nil)
+
+    ;; Keybinds
+    ("b" describe-bindings nil)
+    ("c" describe-key-briefly nil)
+    ("k" describe-key nil)
+    ("w" where-is nil)
+
+    ;; Search
+    ("a" apropos-command nil)
+    ("d" apropos-documentation nil)
+    ("s" info-lookup-symbol nil)
+
+    ;; Describe
+    ("f" describe-function nil)
+    ("p" describe-package nil)
+    ("m" describe-mode nil)
+    ("v" describe-variable nil)
+    ("y" describe-syntax nil)
+
+    ;; quit
+    ("q" help-quit "quit"))
+(global-set-key (kbd "C-c h") #'hydra-help/body)
 
 ;;; ----------------------------------------------
 ;;; ----------------------------------------------
