@@ -7,6 +7,8 @@ history
 site-lisp/
 transient/
 eshell/
+backups/
+autosaves/
 
 *.el~
-
+.mc-lists.el

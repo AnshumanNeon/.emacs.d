@@ -42,6 +42,12 @@
 (switch-to-buffer (get-buffer-create "new"))
 (delete-other-windows)
 
+;; save backup files to this directory
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups/")))
+
+;; save autosave files to this directory
+(setq auto-save-file-name-transforms '(("." "~/.emacs.d/autosaves/" t)))
+
 ;; import hydras
 (load-file "~/.emacs.d/hydras.el")
 
