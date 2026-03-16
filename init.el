@@ -120,6 +120,8 @@
 (cheatsheet-show)
 (delete-other-windows)
 
+;; install haskell mode by M-x package install
+
 ;; show startup time
 (defun efs/display-startup-time ()
   "Get startup time."
@@ -146,7 +148,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(## cheatsheet company delight golden-ratio hydra magit
+   '(## cheatsheet company delight golden-ratio haskell-mode hydra magit
 	multiple-cursors org-bullets org-super-agenda pdf-tools
 	punch-line telephone-line transient with-editor)))
 (custom-set-faces
