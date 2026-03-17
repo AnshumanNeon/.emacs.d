@@ -8,6 +8,9 @@
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
 
+;; add site-lisp to load path and load stuff from it
+(add-to-list 'load-path (concat user-emacs-directory "site-lisp"))
+
 ;; full-screen
 (set-frame-parameter nil 'fullscreen 'fullboth)
 

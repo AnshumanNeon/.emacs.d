@@ -4,9 +4,7 @@
 
 ;; load timu-spacegrey theme (old theme used was timu-spacegrey theme)
 ;; download the timu-spacegrey-theme.el file into site-lisp dir and uncomment
-;; the following 3 lines of code if you want to use timu-spacegrey theme back
-;;
-;; (add-to-list 'load-path (concat user-emacs-directory "site-lisp"))
+;; the following 3 lines of code if you want to use timu-spacegrey theme back:
 ;; (require 'timu-spacegrey-theme)
 ;; (load-theme 'timu-spacegrey :no-confirm)
 
