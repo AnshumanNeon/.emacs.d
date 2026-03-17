@@ -264,5 +264,31 @@ _h_   _l_     _y_ank        _t_ype       _e_xchange-point          /,`.-'`'   ..
     ("q" help-quit "quit"))
 (global-set-key (kbd "C-c h") #'hydra-help/body)
 
+;; tab hydras
+(defhydra hydra-tab (:exit t :columns 4)
+  ("C-f" find-file-in-other-tab "find file in other tab")
+  ("RET" tab-switch "tab switch")
+  ("C-r" find-file-read-only-other-tab "find file (read only) in other tab")
+  ("0" tab-close "close tab")
+  ("1" tab-close-other "close other tabs")
+  ("2" tab-new "new tab")
+  ("G" tab-group "group tab")
+  ("M" tab-move-to "move tab to")
+  ("N" tab-new-to "new tab to")
+  ("O" tab-previous "previous tab")
+  ("b" switch-to-buffer-other-tab "switch to buffer other tab")
+  ("o" dired-other-tab "dired other tab")
+  ("f" find-file-other-tab "find file (other tab)")
+  ("m" tab-move "tab move")
+  ("n" tab-duplicate "tab duplicaet")
+  ("o" tab-next "tab next")
+  ("p" project-other-tab-command "project other tab")
+  ("r" tab-rename "tab rename")
+  ("t" other-tab-prefix "other tab prefix")
+  ("u" tab-undo "tab undo")
+  ("d" tab-detach "tab detach")
+  ("q" "exit" nil))
+(global-set-key (kbd "C-x t") #'hydra-tab/body)
+
 ;;; ----------------------------------------------
 ;;; ----------------------------------------------
