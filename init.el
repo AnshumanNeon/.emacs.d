@@ -49,7 +49,7 @@
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups/")))
 
 ;; save autosave files to this directory
-(setq auto-save-file-name-transforms '(("." "~/.emacs.d/autosaves/" t)))
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/" t)))
 
 ;; import hydras
 (load-file "~/.emacs.d/hydras.el")

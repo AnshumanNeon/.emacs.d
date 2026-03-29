@@ -83,7 +83,7 @@ _o_ther buffers: %s(my/number-names my/last-buffers)
 
 ;; window operations (yes copied from hydras wiki)
 ;; -------------------------------------
-(defhydra hydra-window ()
+(defhydra hydra-window (:hint nil)
   "
 Movement^^        ^Split^         ^Switch^		^Resize^
 ----------------------------------------------------------------
