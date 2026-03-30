@@ -91,6 +91,18 @@
 (require 'golden-ratio)
 (golden-ratio-mode t)
 
+;; vertico
+;; install vertico
+(require 'vertico)
+(vertico-mode t)
+(setq vertico-resize t)
+(setq vertico-cycle t)
+
+;; marginalia (presents helpful annotations for each completion)
+;; install marginalia
+(require 'marginalia)
+(marginalia-mode t)
+
 ;; pdf-tools
 ;; install pdf-tools
 (require 'pdf-tools)
@@ -152,9 +164,9 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(## cheatsheet company delight golden-ratio gruvbox-theme
-	haskell-mode hydra magit multiple-cursors org-bullets
-	org-super-agenda pdf-tools punch-line telephone-line transient
-	with-editor)))
+	haskell-mode hydra magit marginalia multiple-cursors
+	org-bullets org-super-agenda pdf-tools punch-line
+	telephone-line transient vertico with-editor)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
