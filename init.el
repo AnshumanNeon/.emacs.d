@@ -77,6 +77,12 @@
 
 ;; company-mode (for completion)
 (require 'company)
+;; install go-mode
+(require 'go-mode)
+(add-hook 'go-mode-hook 'eglot-ensure)
+(add-hook 'go-mode-hook (lambda ()
+			  (setq tab-width 2)
+			  (setq indent-tabs-mode t)))
 ;; install company-mode
 (add-hook 'after-init-hook 'global-company-mode)
 
@@ -112,15 +118,6 @@
 	      pdf-view-display-size 'fit-page)
 (add-hook 'pdf-view-mode-hook '(global-display-line-numbers-mode 0))
 
-;; nswbuff
-;; used for buffer switching, press C-<tab> to show a list of which buffer to switch in case
-;; you have a lot of buffers to switch from
-;; ----------------------------------------------------------
-;; install nswbuff
-(require 'nswbuff)
-(global-set-key (kbd "C-<tab>") 'nswbuff-switch-to-next-buffer)
-(global-set-key (kbd "C-S-<tab>") 'nswbuff-switch-to-previous-buffer)
-
 ;; symbol-overlay
 ;; highlight all instances of a symbol and do some shit you want on it
 (load-file "./.emacs.d/site-lisp/symbol-overlay/symbol-overlay.el")
@@ -136,6 +133,7 @@
 (delete-other-windows)
 
 ;; install haskell mode by M-x package install
+(setq package-install-upgrade-built-in t)
 
 ;; show startup time
 (defun efs/display-startup-time ()
@@ -163,10 +161,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(## cheatsheet company delight golden-ratio gruvbox-theme
-	haskell-mode hydra magit marginalia multiple-cursors
-	org-bullets org-super-agenda pdf-tools punch-line
-	telephone-line transient vertico with-editor)))
+   '(## cheatsheet company dash delight golden-ratio gruvbox-theme
+	haskell-mode hydra magit magit-section marginalia
+	multiple-cursors org-bullets org-super-agenda pdf-tools
+	punch-line telephone-line vertico with-editor)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
