@@ -2,6 +2,7 @@
 ;;;                 Ord Mode config
 ;;; ----------------------------------------------
 
+<<<<<<< HEAD
 
 (use-package org-bullets
   :ensure t
@@ -27,6 +28,26 @@
   (auto-fill-mode 0)
   (visual-line-mode 1)
   (setq evil-auto-indent nil))
+=======
+(setq org-return-follows-link t)
+(setq org-hide-emphasis-markers t)
+(setq org-ellipsis " ▾")
+(add-hook 'org-mode-hook 'org-indent-mode)
+(setq org-ellipsis "...")
+;; (variable-pitch-mode 1)
+;; (auto-fill-mode 0)
+;; (visual-line-mode 1)
+(setq evil-auto-indent nil)
+
+(use-package org-bullets
+  :ensure t)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(add-hook 'org-mode-hook (lambda () (auto-fill-mode 0)))
+(add-hook 'org-mode-hook (lambda () (visual-line-mode 1)))
+(add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1)))
+;; (org-bullets-mode t)
+(setq org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●"))
+>>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a
 
 (font-lock-add-keywords
  'org-mode
