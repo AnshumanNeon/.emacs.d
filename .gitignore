@@ -1,0 +1,14 @@
+auto-save-list/
+eln-cache/
+elpa/
+url/
+games/
+history
+site-lisp/
+transient/
+eshell/
+backups/
+autosaves/
+
+*.el~
+.mc-lists.el

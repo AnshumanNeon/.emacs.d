@@ -1,0 +1,295 @@
+;;; ---------------------------------
+;;; Hydras Config
+;;; ---------------------------------
+
+(use-package hydra
+  :ensure t)
+
+;; zoom
+(defhydra hydra-zoom (global-map "C-c =")
+  "zoom"
+  ("+" text-scale-increase "in")
+  ("-" text-scale-decrease "out")
+  ("0" (text-scale-increase 0) "reset"))
+
+;; file operations
+(defhydra hydra-file-operations (:color blue :columns 3 :quit-key "q")
+  "File Operations"
+  ("m" make-directory "make directory (mkdir)")
+  ("f" delete-file "delete a file")
+  ("d" delete-directory "delete a directory"))
+(global-set-key (kbd "C-c f") 'hydra-file-operations/body)
+
+;; switch windows (copied from hydra wiki)
+;; -------------------------------------------
+(defun my/name-of-buffers (n)
+  "Return the names of the first N buffers from `buffer-list'."
+  (let ((bns
+         (delq nil
+               (mapcar
+                (lambda (b)
+                  (unless (string-match "^ " (setq b (buffer-name b)))
+                    b))
+                (buffer-list)))))
+    (subseq bns 1 (min (1+ n) (length bns)))))
+
+;; ;; Given ("a", "b", "c"), return "1. a, 2. b, 3. c".
+(defun my/number-names (list)
+  "Enumerate and concatenate LIST."
+  (let ((i 0))
+    (mapconcat
+     (lambda (x)
+       (format "%d. %s" (cl-incf i) x))
+     list
+     ", ")))
+
+(defvar my/last-buffers nil)
+
+(defun my/switch-to-buffer (arg)
+  (interactive "p")
+  (switch-to-buffer
+   (nth (1- arg) my/last-buffers)))
+
+(defun my/switch-to-buffer-other-window (arg)
+  (interactive "p")
+  (switch-to-buffer-other-window
+   (nth (1- arg) my/last-buffers)))
+
+(defhydra my/switch-to-buffer (:exit t :quit-key "<escape>"
+                                     :body-pre (setq my/last-buffers
+                                                     (my/name-of-buffers 4)))
+  "
+_o_ther buffers: %s(my/number-names my/last-buffers)
+
+"
+  ("o" my/switch-to-buffer "this window")
+  ("O" my/switch-to-buffer-other-window "other window")
+  ("<escape>" nil))
+(global-set-key (kbd "C-c o") 'my/switch-to-buffer/body)
+
+;; window operations (yes copied from hydras wiki)
+;; -------------------------------------
+(defhydra hydra-window (:hint nil)
+  "
+Movement^^        ^Split^         ^Switch^		^Resize^
+----------------------------------------------------------------
+_h_ ←       	_v_ertical    	_b_uffer		_q_ X←
+_j_ ↓        	_x_ horizontal	_f_ind files	_w_ X↓
+_k_ ↑        	_z_ undo      	_a_ce 1		_e_ X↑
+_l_ →        	_Z_ reset      	_s_wap		_r_ X→
+_F_ollow		_D_lt Other   	_S_ave		max_i_mize
+_SPC_ cancel	_o_nly this   	_d_elete	
+"
+  ("h" windmove-left )
+  ("j" windmove-down )
+  ("k" windmove-up )
+  ("l" windmove-right )
+  ("q" hydra-move-splitter-left)
+  ("w" hydra-move-splitter-down)
+  ("e" hydra-move-splitter-up)
+  ("r" hydra-move-splitter-right)
+  ("b" helm-mini)
+  ("f" helm-find-files)
+  ("F" follow-mode)
+  ("a" (lambda ()
+         (interactive)
+         (ace-window 1)
+         (add-hook 'ace-window-end-once-hook
+                   'hydra-window/body))
+   )
+  ("v" (lambda ()
+         (interactive)
+         (split-window-right)
+         (windmove-right))
+   )
+  ("x" (lambda ()
+         (interactive)
+         (split-window-below)
+         (windmove-down))
+   )
+  ("s" (lambda ()
+         (interactive)
+         (ace-window 4)
+         (add-hook 'ace-window-end-once-hook
+                   'hydra-window/body)))
+  ("S" save-buffer)
+  ("d" delete-window)
+  ("D" (lambda ()
+         (interactive)
+         (ace-window 16)
+         (add-hook 'ace-window-end-once-hook
+                   'hydra-window/body))
+   )
+  ("o" delete-other-windows)
+  ("i" ace-maximize-window)
+  ("z" (progn
+         (winner-undo)
+         (setq this-command 'winner-undo))
+   )
+  ("Z" winner-redo)
+  ("SPC" nil)
+  )
+(global-set-key (kbd "C-c w") 'hydra-window/body)
+;;; ---------------------------------
+
+;; rectangle hydra (yes copied from hydras wiki)
+(defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
+                                     :color pink
+                                     :hint nil
+                                     :post (deactivate-mark) :quit-key "q")
+  "
+  ^_k_^       _w_ copy      _o_pen       _N_umber-lines            |\\     -,,,--,,_
+_h_   _l_     _y_ank        _t_ype       _e_xchange-point          /,`.-'`'   ..  \-;;,_
+  ^_j_^       _d_ kill      _c_lear      _r_eset-region-mark      |,4-  ) )_   .;.(  `'-'
+^^^^          _u_ndo        _q_ quit     ^ ^                     '---''(./..)-'(_\_)
+"
+  ("k" rectangle-previous-line)
+  ("j" rectangle-next-line)
+  ("h" rectangle-backward-char)
+  ("l" rectangle-forward-char)
+  ("d" kill-rectangle)                    ;; C-x r k
+  ("y" yank-rectangle)                    ;; C-x r y
+  ("w" copy-rectangle-as-kill)            ;; C-x r M-w
+  ("o" open-rectangle)                    ;; C-x r o
+  ("t" string-rectangle)                  ;; C-x r t
+  ("c" clear-rectangle)                   ;; C-x r c
+  ("e" rectangle-exchange-point-and-mark) ;; C-x C-x
+  ("N" rectangle-number-lines)            ;; C-x r N
+  ("r" (if (region-active-p)
+           (deactivate-mark)
+         (rectangle-mark-mode 1)))
+  ("u" undo nil)
+  ("q" nil))
+(global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
+;; ----------------------------------------
+
+;; help hydras (courtesy sledgespread from reddit)
+(defhydra hydra-help (:exit t)
+    ;; Better to exit after any command because otherwise helm gets in a
+    ;; mess, set hint to nil: written out manually.
+
+    "
+  Describe        ^^Keys                    ^^Search                    ^^Documentation
+  ---------------------------------------------------------------------------------------
+  _f_unction        _k_eybinding              _a_propros                  _i_nfo
+  _p_ackage         _w_here-is                _d_oc strings            
+  _m_ode            _b_: show all bindings    _s_: info by symbol         
+  _v_ariable
+
+  "
+    ;; Boring help commands...
+    ("e" view-echo-area-messages "messages")
+    ("l" view-lossage "lossage")
+    ("C" describe-coding-system "coding-system")
+    ("I" describe-input-method "input-method")
+
+
+    ;; Documentation
+    ("i" info nil)
+
+    ;; Keybinds
+    ("b" describe-bindings nil)
+    ("c" describe-key-briefly nil)
+    ("k" describe-key nil)
+    ("w" where-is nil)
+
+    ;; Search
+    ("a" apropos-command nil)
+    ("d" apropos-documentation nil)
+    ("s" info-lookup-symbol nil)
+
+    ;; Describe
+    ("f" describe-function nil)
+    ("p" describe-package nil)
+    ("m" describe-mode nil)
+    ("v" describe-variable nil)
+    ("y" describe-syntax nil)
+
+    ;; quit
+    ("q" help-quit "quit"))
+(global-set-key (kbd "C-c h") #'hydra-help/body)
+
+;; tab hydras
+(defhydra hydra-tab (:exit t :columns 4)
+  ("C-f" find-file-in-other-tab "find file in other tab")
+  ("RET" tab-switch "tab switch")
+  ("C-r" find-file-read-only-other-tab "find file (read only) in other tab")
+  ("0" tab-close "close tab")
+  ("1" tab-close-other "close other tabs")
+  ("2" tab-new "new tab")
+  ("G" tab-group "group tab")
+  ("M" tab-move-to "move tab to")
+  ("N" tab-new-to "new tab to")
+  ("O" tab-previous "previous tab")
+  ("b" switch-to-buffer-other-tab "switch to buffer other tab")
+  ("o" dired-other-tab "dired other tab")
+  ("f" find-file-other-tab "find file (other tab)")
+  ("m" tab-move "tab move")
+  ("n" tab-duplicate "tab duplicaet")
+  ("o" tab-next "tab next")
+  ("p" project-other-tab-command "project other tab")
+  ("r" tab-rename "tab rename")
+  ("t" other-tab-prefix "other tab prefix")
+  ("u" tab-undo "tab undo")
+  ("d" tab-detach "tab detach")
+  ("q" "exit" nil))
+(global-set-key (kbd "C-x t") #'hydra-tab/body)
+
+;; magit
+(defhydra hydra-magit (:color blue
+                              :columns 4 :quit-key "q")
+  "Magit"
+  ("s" magit-status "status")
+  ("c" magit-clone "clone")
+  ("l" magit-log-all-branches "log")
+  ("b" magit-branch-popup "branch popup")
+  ("r" magit-rebase-popup "rebase popup")
+  ("f" magit-fetch-popup "fetch popup")
+  ("P" magit-push-popup "push popup")
+  ("F" magit-pull-popup "pull popup")
+  ("W" magit-format-patch "format patch")
+  ("$" magit-process "process"))
+(global-set-key (kbd "C-c g") 'hydra-magit/body)
+
+;; symbol-overlay (highlight symbols)
+(defhydra hydra-symbol-overlay (:color red :columns 3 :quit-key "<escape>")
+  "Symbol Overlay"
+  ("s" symbol-overlay-mode "toggle symbol overlay")
+  ("i" symbol-overlay-put "put")
+  ("n" symbol-overlay-jump-next "jump forward")
+  ("p" symbol-overlay-jump-prev "jump backward")
+  ("N" symbol-overlay-switch-forward "switch forward")
+  ("P" symbol-overlay-switch-backward "switch backward")
+  ("w" symbol-overlay-save-symbol "save symbol")
+  ("t" symbol-overlay-toggle-in-scope "toggle in scope")
+  ("e" symbol-overlay-echo-mark "echo mark")
+  ("d" symbol-overlay-jump-to-definition "jump to definition")
+  ("S" symbol-overlay-isearch-literally "isearch")
+  ("q" symbol-overlay-query-replace "query replace")
+  ("r" symbol-overlay-rename "rename")
+  ("R" symbol-overlay-remove-all "remove all")
+  ("SPC" nil "quit"))
+(global-set-key (kbd "C-c s") 'hydra-symbol-overlay/body)
+
+;; multiple-cursors (courtesy cqql from reddit)
+(defhydra hydra-multiple-cursors (:hint nil)
+  "
+     ^Up^            ^Down^        ^Miscellaneous^
+----------------------------------------------
+[_p_]   Next    [_n_]   Next    [_l_] Edit lines
+[_P_]   Skip    [_N_]   Skip    [_a_] Mark all
+[_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
+  ("l" mc/edit-lines :exit t) ;; add a cursor to each line in an active selected region
+  ;; When you want to add multiple cursors not based on continuous lines, but based on keywords in the buffer, use:
+  ("a" mc/mark-all-like-this :exit t)
+  ("n" mc/mark-next-like-this)
+  ("N" mc/skip-to-next-like-this)
+  ("M-n" mc/unmark-next-like-this)
+  ("p" mc/mark-previous-like-this)
+  ("P" mc/skip-to-previous-like-this)
+  ("M-p" mc/unmark-previous-like-this)
+  ("q" nil))
+(global-set-key (kbd "C-c m") 'hydra-multiple-cursors/body)
+
+;;; ---------------------------------
+;;; ---------------------------------
