@@ -66,7 +66,7 @@
 (package-initialize)
 
 ;; load themes and modeline
-(load-file "./theme.el")
+(load-file "~/.emacs.d/theme.el")
 
 ;; magit
 ;; install magit
@@ -86,7 +86,7 @@
   :ensure t)
 
 ;; load hydras
-(load-file "./hydras.el")
+(load-file "~/.emacs.d/hydras.el")
 
 ;; golden-ratio
 ;; install golden-ratio
@@ -137,7 +137,7 @@
 (load-file "~/.emacs.d/org-agenda.el")
 
 ;; load cheatsheets
-(load-file "./cheatsheets.el")
+(load-file "~/.emacs.d/cheatsheets.el")
 
 ;; open cheatsheets
 (cheatsheet-show)
