@@ -11,8 +11,4 @@ backups/
 autosaves/
 
 *.el~
-<<<<<<< HEAD
 .mc-lists.el
-=======
-.mc-lists.el
->>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a

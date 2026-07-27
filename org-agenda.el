@@ -47,17 +47,11 @@
 
         ("@cinema" . ?C)))
 
-<<<<<<< HEAD
 (use-package org-super-agenda
   :after org
   :init
   (org-super-agenda-mode t)
   :config
-=======
-(with-eval-after-load 'org
-  (require 'org-super-agenda)
-  (org-super-agenda-mode t)
->>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a
   (setq org-agenda-custom-commands
 	'(
           ("x" "Xuper View (Org Super Agenda)"
@@ -71,7 +65,6 @@
 
             (alltodo ""
                      (
-<<<<<<< HEAD
 		      ;; Remove tags to make the view cleaner
 		      (org-agenda-remove-tags t)
 		      (org-agenda-prefix-format "  %t  %s")                    
@@ -80,16 +73,6 @@
 		      ;; Define the super agenda groups (sorts by order)
 		      (org-super-agenda-groups
 		       '(
-=======
-                      ;; Remove tags to make the view cleaner
-                      (org-agenda-remove-tags t)
-                      (org-agenda-prefix-format "  %t  %s")                    
-                      (org-agenda-overriding-header "CURRENT STATUS")
-
-                      ;; Define the super agenda groups (sorts by order)
-                      (org-super-agenda-groups
-                       '(
->>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a
 			 ;; Filter where TODO state is IN-PROGRESS
 			 (:name "Currently Working"
 				:todo "ACTIVE"
@@ -147,13 +130,8 @@
 				:priority<= "C"
 				:order 20)
 			 )
-<<<<<<< HEAD
 		       )
 		      )
-=======
-                       )
-                      )
->>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a
                      )
             ))
           )))
@@ -161,17 +139,10 @@
 (setq-default org-agenda-window-setup 'current-window)
 
 ;; habits
-<<<<<<< HEAD
 (use-package org-habit
   :ensure org
   :config
   (setq org-habit-toggle-display-in-agenda t)
   (add-to-list 'org-modules 'org-habit))
-=======
-(require 'org-habit)
-(setq org-habit-toggle-display-in-agenda t)
-(add-to-list 'org-modules 'org-habit)
->>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a
-
 ;;; ----------------------------------------------
 ;;; ----------------------------------------------

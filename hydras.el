@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-;;; ---------------------------------
-;;; Hydras Config
-;;; ---------------------------------
-
-(use-package hydra
-  :ensure t)
-=======
 ;;; ----------------------------------------------
 ;;;                 Hydra config
 ;;; ----------------------------------------------
 
-;; install hydra
->>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a
+(use-package hydra
+  :ensure t)
 
 ;; zoom
 (defhydra hydra-zoom (global-map "C-c =")
@@ -20,24 +12,6 @@
   ("-" text-scale-decrease "out")
   ("0" (text-scale-increase 0) "reset"))
 
-<<<<<<< HEAD
-=======
-;; magit
-(defhydra hydra-magit (:color blue
-                              :columns 4 :quit-key "q")
-  "Magit"
-  ("s" magit-status "status")
-  ("c" magit-clone "clone")
-  ("l" magit-log-all-branches "log")
-  ("b" magit-branch-popup "branch popup")
-  ("r" magit-rebase-popup "rebase popup")
-  ("f" magit-fetch-popup "fetch popup")
-  ("P" magit-push-popup "push popup")
-  ("F" magit-pull-popup "pull popup")
-  ("W" magit-format-patch "format patch")
-  ("$" magit-process "process"))
-
->>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a
 ;; file operations
 (defhydra hydra-file-operations (:color blue :columns 3 :quit-key "q")
   "File Operations"
@@ -156,11 +130,7 @@ _SPC_ cancel	_o_nly this   	_d_elete
   ("SPC" nil)
   )
 (global-set-key (kbd "C-c w") 'hydra-window/body)
-<<<<<<< HEAD
-;;; ---------------------------------
-=======
 ;; --------------------------------------------
->>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a
 
 ;; rectangle hydra (yes copied from hydras wiki)
 (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
@@ -193,50 +163,6 @@ _h_   _l_     _y_ank        _t_ype       _e_xchange-point          /,`.-'`'   ..
 (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
 ;; ----------------------------------------
 
-<<<<<<< HEAD
-=======
-
-;; symbol-overlay (highlight symbols)
-(defhydra hydra-symbol-overlay (:color red :columns 3 :quit-key "<escape>")
-  "Symbol Overlay"
-  ("s" symbol-overlay-mode "toggle symbol overlay")
-  ("i" symbol-overlay-put "put")
-  ("n" symbol-overlay-jump-next "jump forward")
-  ("p" symbol-overlay-jump-prev "jump backward")
-  ("N" symbol-overlay-switch-forward "switch forward")
-  ("P" symbol-overlay-switch-backward "switch backward")
-  ("w" symbol-overlay-save-symbol "save symbol")
-  ("t" symbol-overlay-toggle-in-scope "toggle in scope")
-  ("e" symbol-overlay-echo-mark "echo mark")
-  ("d" symbol-overlay-jump-to-definition "jump to definition")
-  ("S" symbol-overlay-isearch-literally "isearch")
-  ("q" symbol-overlay-query-replace "query replace")
-  ("r" symbol-overlay-rename "rename")
-  ("R" symbol-overlay-remove-all "remove all")
-  ("SPC" nil "quit"))
-(global-set-key (kbd "C-c s") 'hydra-symbol-overlay/body)
-
-;; multiple-cursors (courtesy cqql from reddit)
-(defhydra hydra-multiple-cursors (:hint nil)
-  "
-     ^Up^            ^Down^        ^Miscellaneous^
-----------------------------------------------
-[_p_]   Next    [_n_]   Next    [_l_] Edit lines
-[_P_]   Skip    [_N_]   Skip    [_a_] Mark all
-[_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
-  ("l" mc/edit-lines :exit t) ;; add a cursor to each line in an active selected region
-  ;; When you want to add multiple cursors not based on continuous lines, but based on keywords in the buffer, use:
-  ("a" mc/mark-all-like-this :exit t)
-  ("n" mc/mark-next-like-this)
-  ("N" mc/skip-to-next-like-this)
-  ("M-n" mc/unmark-next-like-this)
-  ("p" mc/mark-previous-like-this)
-  ("P" mc/skip-to-previous-like-this)
-  ("M-p" mc/unmark-previous-like-this)
-  ("q" nil))
-(global-set-key (kbd "C-c m") 'hydra-multiple-cursors/body)
-
->>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a
 ;; help hydras (courtesy sledgespread from reddit)
 (defhydra hydra-help (:exit t)
     ;; Better to exit after any command because otherwise helm gets in a
@@ -309,7 +235,7 @@ _h_   _l_     _y_ank        _t_ype       _e_xchange-point          /,`.-'`'   ..
   ("q" "exit" nil))
 (global-set-key (kbd "C-x t") #'hydra-tab/body)
 
-<<<<<<< HEAD
+
 ;; magit
 (defhydra hydra-magit (:color blue
                               :columns 4 :quit-key "q")
@@ -366,9 +292,5 @@ _h_   _l_     _y_ank        _t_ype       _e_xchange-point          /,`.-'`'   ..
   ("q" nil))
 (global-set-key (kbd "C-c m") 'hydra-multiple-cursors/body)
 
-;;; ---------------------------------
-;;; ---------------------------------
-=======
 ;;; ----------------------------------------------
 ;;; ----------------------------------------------
->>>>>>> b69b9bd7a737bac3dae91e9adcf950a970ea4f1a
