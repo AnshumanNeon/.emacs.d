@@ -47,9 +47,11 @@
 
         ("@cinema" . ?C)))
 
-(with-eval-after-load 'org
-  (require 'org-super-agenda)
+(use-package org-super-agenda
+  :after org
+  :init
   (org-super-agenda-mode t)
+  :config
   (setq org-agenda-custom-commands
 	'(
           ("x" "Xuper View (Org Super Agenda)"
@@ -63,14 +65,14 @@
 
             (alltodo ""
                      (
-                      ;; Remove tags to make the view cleaner
-                      (org-agenda-remove-tags t)
-                      (org-agenda-prefix-format "  %t  %s")                    
-                      (org-agenda-overriding-header "CURRENT STATUS")
+		      ;; Remove tags to make the view cleaner
+		      (org-agenda-remove-tags t)
+		      (org-agenda-prefix-format "  %t  %s")                    
+		      (org-agenda-overriding-header "CURRENT STATUS")
 
-                      ;; Define the super agenda groups (sorts by order)
-                      (org-super-agenda-groups
-                       '(
+		      ;; Define the super agenda groups (sorts by order)
+		      (org-super-agenda-groups
+		       '(
 			 ;; Filter where TODO state is IN-PROGRESS
 			 (:name "Currently Working"
 				:todo "ACTIVE"
@@ -128,8 +130,8 @@
 				:priority<= "C"
 				:order 20)
 			 )
-                       )
-                      )
+		       )
+		      )
                      )
             ))
           )))
@@ -137,9 +139,10 @@
 (setq-default org-agenda-window-setup 'current-window)
 
 ;; habits
-(require 'org-habit)
-(setq org-habit-toggle-display-in-agenda t)
-(add-to-list 'org-modules 'org-habit)
-
+(use-package org-habit
+  :ensure org
+  :config
+  (setq org-habit-toggle-display-in-agenda t)
+  (add-to-list 'org-modules 'org-habit))
 ;;; ----------------------------------------------
 ;;; ----------------------------------------------

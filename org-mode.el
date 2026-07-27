@@ -2,24 +2,30 @@
 ;;;                 Ord Mode config
 ;;; ----------------------------------------------
 
-(setq org-return-follows-link t)
-(setq org-hide-emphasis-markers t)
-(setq org-ellipsis " ▾")
-(add-hook 'org-mode-hook 'org-indent-mode)
-(setq org-ellipsis "...")
-;; (variable-pitch-mode 1)
-;; (auto-fill-mode 0)
-;; (visual-line-mode 1)
-(setq evil-auto-indent nil)
-
 (use-package org-bullets
-  :ensure t)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-(add-hook 'org-mode-hook (lambda () (auto-fill-mode 0)))
-(add-hook 'org-mode-hook (lambda () (visual-line-mode 1)))
-(add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1)))
-;; (org-bullets-mode t)
-(setq org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●"))
+  :ensure t
+  :init
+  (org-bullets-mode t)
+  :config
+  (setq org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+(use-package org-mode
+  :ensure t
+  :hook
+  ((org-mode-hook . (lambda () (org-bullets-mode 1)))
+   (org-mode-hook . (lambda () (auto-fill-mode 0)))
+   (org-mode-hook . (lambda () (visual-line-mode 1)))
+   (org-mode-hook . (lambda () (variable-pitch-mode 1))))
+  :config
+  (setq org-return-follows-link t)
+  (setq org-hide-emphasis-markers t)
+  (setq org-ellipsis " ▾")
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (setq org-ellipsis "...")
+  (variable-pitch-mode 0)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq evil-auto-indent nil))
 
 (font-lock-add-keywords
  'org-mode
