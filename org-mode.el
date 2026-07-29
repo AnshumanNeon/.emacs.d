@@ -2,6 +2,13 @@
 ;;;                 Ord Mode config
 ;;; ----------------------------------------------
 
+(defun dw/org-mode-setup ()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq evil-auto-indent nil))
+
 (use-package org-bullets
   :ensure t
   :init
@@ -9,23 +16,16 @@
   :config
   (setq org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
-(use-package org-mode
-  :ensure t
-  :hook
-  ((org-mode-hook . (lambda () (org-bullets-mode 1)))
-   (org-mode-hook . (lambda () (auto-fill-mode 0)))
-   (org-mode-hook . (lambda () (visual-line-mode 1)))
-   (org-mode-hook . (lambda () (variable-pitch-mode 1))))
+(require 'org-indent)
+
+(use-package org
+  :hook (org-mode . dw/org-mode-setup)
   :config
   (setq org-return-follows-link t)
   (setq org-hide-emphasis-markers t)
   (setq org-ellipsis " ▾")
   (add-hook 'org-mode-hook 'org-indent-mode)
-  (setq org-ellipsis "...")
-  (variable-pitch-mode 0)
-  (auto-fill-mode 0)
-  (visual-line-mode 1)
-  (setq evil-auto-indent nil))
+  (setq org-ellipsis "..."))
 
 (font-lock-add-keywords
  'org-mode

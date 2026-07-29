@@ -130,8 +130,12 @@
   :hook
   (after-init-hook . global-company-mode))
 
+;; go-mode
+(use-package go-ts-mode
+  :mode "\\.go")
+
 ;; load org config when you open an org file
-(add-to-list 'auto-mode-alist '("\\.org" . (load-file "~/.emacs.d/org-mode.el")))
+(load-file "~/.emacs.d/org-mode.el")
 
 ;; but load the org agenda right away
 (load-file "~/.emacs.d/org-agenda.el")
@@ -163,7 +167,7 @@
  '(package-selected-packages
    '(cheatsheet company golden-ratio gruvbox-theme hydra hydras magit
 		marginalia multiple-cursors org-bullets org-habit
-		org-mode org-super-agenda symbol-overlay
+		org-mode org-super-agenda pdf-tools symbol-overlay
 		telephone-line vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
